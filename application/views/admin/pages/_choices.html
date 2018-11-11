@@ -1,0 +1,36 @@
+<?php
+/** @var \Main\View\Base $this */
+/** @var \Main\Model\Page $page */
+$page = $this->page;
+$choices = $page->getChoices();
+$form = $this->createBootstrapForm($this->createChoice);
+?>
+<h2>Możliwe wybory</h2>
+<?= $form->start() ?>
+<table class="table">
+    <tbody>
+    <?php foreach ($choices as $choice): ?>
+        <tr>
+        <?php if ($choice->id()): ?>
+            <?php $target = $choice->getTarget(); ?>
+
+            <td><?= $choice->getName() ?></td>
+            <td><?= $choice->getDescription() ?></td>
+            <td><?= $target
+                ? $this->linkTo($target, '/admin/pages/edit/' . $target->id())
+                : $this->linkTo('(utwórz stronę docelową)', '/admin/pages/create/' . $choice->id()) ?></td>
+            <td><?= $this->linkTo('usuń', '/admin/pages/remove-choice/' . $choice->id()) ?></td>
+
+        <?php else: ?>
+
+            <td><?= $form->text('name') ?></td>
+            <td><?= $form->text('description') ?></td>
+            <td><?= $form->number('target') ?></td>
+            <td><?= $form->button('submit', [ 'button_class' => 'flaticon-add' ]) ?></td>
+
+        <?php endif; ?>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?= $form->end() ?>

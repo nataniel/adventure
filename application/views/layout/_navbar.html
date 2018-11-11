@@ -1,0 +1,16 @@
+<?php
+/** @var \Main\View\Base $this */
+?>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <?= $this->linkTo('HOME', '/', [ 'class' => 'navbar-brand' ])?>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <?= $this->tag('li', [ 'class' => 'nav-item' . ($this->getActiveModule() == 'admin' ? ' active' : '') ],
+                    $this->linkTo('Administracja', '/admin', [ 'class' => 'nav-link' ])) ?>
+                <?= $this->tag('li', [ 'class' => 'nav-item' . ($this->getActiveModule() == 'play' ? ' active' : '') ],
+                    $this->linkTo('Rozgrywka', '/play', [ 'class' => 'nav-link' ])) ?>
+            </ul>
+        </div>
+    </div>
+</nav>

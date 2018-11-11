@@ -1,0 +1,10 @@
+<?php
+/** @var \Main\View\Base $this */
+/** @var \E4u\Common\Collection\Paginable $paginator */
+$paginator = $this->paginator;
+?>
+<nav class="pagination-top float-right">
+    <?php if ($paginator->pageCount() > 1): ?>
+        <?= $this->pagination($paginator, [ 'class' => 'pagination pagination-sm mb-0' ]) ?>
+    <?php endif; ?>
+</nav>

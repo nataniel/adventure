@@ -1,0 +1,25 @@
+<?php
+/** @var \Main\View\Base $this */
+?>
+<?= $this->_('doctype') ?>
+<html lang="pl">
+<head>
+    <?= $this->render('layout/_header') ?>
+    <?= $this->stylesheets([ 'layout/default' ]) ?>
+</head>
+
+<body class="layout-default" id="<?= $this->controllerID() ?>"
+      itemscope itemtype="http://schema.org/WebPage">
+
+<?= $this->render('layout/_navbar') ?>
+<div class="container">
+    <main role="main">
+
+        <?= $this->render('layout/_flash') ?>
+        <?= $this->getPartial('content') ?>
+
+    </main>
+</div>
+
+</body>
+</html>

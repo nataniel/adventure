@@ -1,0 +1,18 @@
+<?php
+/** @var \Main\View\Base $this */
+/** @var \E4u\Common\Collection\Paginable $paginator */
+$paginator = $this->paginator;
+?>
+<?php if ($paginator->pageCount() > 0): ?>
+    <nav class="pagination-bottom row">
+
+        <div class="col-6">
+            <?php if ($paginator->pageCount() > 1): ?>
+                <?= $this->pagination($paginator, [ 'class' => 'pagination pagination-sm mb-0' ]) ?>
+            <?php endif; ?>
+        </div>
+
+        <div class="pagination-count col-6 text-right">pokazuje: <?= sprintf('%d - %d z %d', $paginator->start(), $paginator->end(), $paginator->total()) ?></div>
+
+    </nav>
+<?php endif; ?>

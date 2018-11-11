@@ -1,0 +1,30 @@
+<?php
+/** @var \Main\View\Base $this */
+/** @var \Main\Model\Page $page */
+$page = $this->page;
+$form = $this->createBootstrapForm($this->editPage);
+?>
+<h1>Edycja strony</h1>
+<div class="row">
+    <div class="col-lg-6">
+
+        <?= $form->start() ?>
+        <?= $form->text('name') ?>
+        <?= $form->text('description') ?>
+        <?= $form->textarea('content') ?>
+        <?= $form->text('image', [ 'input_type' => 'url' ]) ?>
+        <?= $form->button('submit', [ 'button_class' => 'flaticon-save' ]) ?>
+        <?= $this->linkTo('Anuluj', '/admin/pages', [ 'class' => 'btn btn-outline-primary' ])?>
+        <?= $form->end() ?>
+
+    </div>
+    <div class="col-lg-6">
+
+        <?= $this->render('admin/pages/_sources') ?>
+        <?= $this->image($page->getImage(), $page->getName(), [ 'class' => 'img-fluid' ]) ?>
+
+    </div>
+</div>
+
+<hr />
+<?= $this->render('admin/pages/_choices') ?>

@@ -1,0 +1,80 @@
+<?php
+$beginnings = [
+    [ 'h1' => 'Luke! Luke! Luke! Hey! Hey!',
+        'p' => "I knew you'd come back! I just knew it! Well, I wasn't gonna let you get all the credit and take all the reward.
+        Hey, I knew there was more to you than money. Oh, no! Oh, my! Artoo! Can you hear me? Say something! You can
+        repair him, can't you? We'll get to work on him right away. You must repair him! Sir, if any of my circuits or
+        gears will help, I'll gladly donate them. He'll be all right." ],
+    [ 'h1' => 'Hello there!',
+        'p' => "Come here my little friend. Don't be afraid. Don't worry, he'll be all right. What happened? Rest easy, son,
+        you've had a busy day. You're fortunate you're still in one piece. Ben? Ben Kenobi! Boy, am I glad to see you!
+        The Jundland wastes are not to be traveled lightly. Tell me young Luke, what brings you out this far? Oh, this
+        little droid! I think he's searching for his former master...I've never seen such devotion in a droid
+        before...there seems to be no stopping him. He claims to be the property of an Obi-Wan Kenobi. Is he a relative
+        of yours? Do you know who he's talking about?" ],
+    [ 'h1' => 'Hello, sir.',
+        'p' => "I am See-Threepio, human-cyborg relations. My facilities are at your... Well, really! What's wrong with the
+        Falcon? Hyperdrive. I'll get my people to work on it. Good. You know, that ship saved my life quite a few times.
+        She's the fastest hunk of junk in the galaxy. How's the gas mine? Is it paying off for you? Oh, not as well as
+        I'd like. We're a small outpost and not very self-sufficient. And I've had supply problems of every kind. I've
+        had labor difficulties... What's so funny? You. Listen to you - you sound like a businessman, a responsible
+        leader. Who'd have thought that, huh? You know, seeing you sure brings back a few things. Yeah. Yeah, I'm
+        responsible these days. It's the price you pay for being successful." ],
+];
+$beginning = $beginnings[array_rand($beginnings)];
+?>
+
+<?= $this->showTitle('h1', $beginning['h1']); ?>
+    <p><?= $beginning['p'] ?></p>
+
+
+    <p>And what of the Rebellion? If the Rebels have obtained a complete technical readout of this station, it is
+        possible, however unlikely, that they might find a weakness and exploit it. The plans you refer to will soon be
+        back in our hands. Any attack made by the Rebels against this station would be a useless gesture, no matter what
+        technical data they've obtained. This station is now the ultimate power in the universe. I suggest we use
+        it!</p>
+    <p>Master Yoda... is Darth Vader my father? Mmm... rest I need. Yes... rest. Yoda, I must know. Your father he is.
+        Told you, did he? Yes. Unexpected this is, and unfortunate... Unfortunate that I know the truth? No. Unfortunate
+        that you rushed to face him... that incomplete was your training. Not ready for the burden were you. Well, I'm
+        sorry. Remember, a Jedi's strength flows from the Force. But beware. Anger, fear, aggression. The dark side are
+        they. Once you start down the dark path, forever will it dominate your destiny. </p>
+
+<?
+$jumbotrons = [
+    [ "Look at the size of that thing!", "Cut the chatter, Red Two. Accelerate to attack speed. This is it, boys!", "Red Leader, this is Gold Leader. I copy, Gold Leader. We're starting for the target shaft now. We're in position. I'm going to cut across the axis and try and draw their fire. Heavy fire, boss! Twenty-degrees. I see it.", "Stay low" ],
+    [ "This is Chewbacca.", "He's first-mate on a ship that might suit our needs. I don't like the look of this. Han Solo. I'm captain of the Millennium Falcon.", "Chewie here tells me you're looking for passage to the Alderaan system. Yes, indeed. If it's a fast ship. Fast ship? You've never heard of the Millennium Falcon?", "Should I have?" ],
+    [ "The security codes has been changed!", "Artoo, you can tell the computer to override the security system.", "Attention! This is Lando Calrissian. The Empire has takes control of the city. I advise everyone to leave before more Imperial troops arrive.", "This way" ],
+];
+$jumbotron = $jumbotrons[array_rand($jumbotrons)];
+?>
+
+    <div class="jumbotron">
+        <h1 class="display-4"><?= $jumbotron[0] ?></h1>
+        <p class="lead"><?= $jumbotron[1] ?></p>
+        <hr class="my-4">
+        <p><?= $jumbotron[2] ?></p>
+        <p class="lead">
+            <?= $this->linkTo(isset($jumbotron[3]) ? $jumbotron[3] : 'Learn more', '/play', [ 'class' => 'btn btn-success btn-lg' ]) ?>
+        </p>
+    </div>
+
+    <p>Horizontal boosters...! Alluvial dampers...! Well that's not it. Bring me the hydrospanners! I don't know how
+        we're going to get out of this one. Oww! Chewie! That was no laser blast! Something hit us. Han, get up here!
+        Come on, Chewie! Asteroids! Oh, no! Chewie, set two-seven-one. What are you doing? You're not actually going
+        into an asteroid field? They'd be crazy to follow us, wouldn't they? You don't have to do this to impress me.
+        Sir, the possibility of successfully navigating an asteroid field is approximately three thousand, seven hundred
+        and twenty to one. Never tell me the odds!</p>
+
+    <p>Don't blame me. I'm an interpreter. I'm not supposed to know a power socket from a computer terminal. What are
+        you talking about? We're not interested in the hyperdrive on the Millennium Falcon. It's fixed! Just open the
+        door, you stupid lump.</p>
+
+    <p>If only you had attached my legs, I wouldn't be in this ridiculous position. Now, remember, Chewbacca, you have a
+        responsibility to me, so don't do anything foolish. What's going on...buddy? You're being put into carbon
+        freeze. What if he doesn't survive? He's worth a lot to me. The Empire will compensate you if he dies. Put him
+        in! Oh, no! No, no, no! Stop, Chewbacca, stop...! Stop, Chewie, stop! Do you hear me? Stop! Yes, stop, please!
+        I'm not ready to die. Chewie! Chewie, this won't help me. Hey! Save your strength. There'll be another time. The
+        princess - you have to take care of her. You hear me? I love you! I know.</p>
+
+    <p>It's over, Commander. The Rebels have been routed. They're fleeing into the woods. We need reinforcements to
+        continue the pursuit. Send three squads to help. Open the back door. Yes, sir. Throw me another charge.</p>

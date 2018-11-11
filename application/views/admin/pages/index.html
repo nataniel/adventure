@@ -1,0 +1,33 @@
+<?php
+/** @var \Main\View\Base $this */
+/** @var \Main\Model\Page[] $pages */
+$pages = $this->pages;
+?>
+<h1>Lista stron</h1>
+<table class="table">
+    <tbody>
+        <?php foreach ($pages as $page): ?>
+            <tr>
+                <td style="width: 150px"><?= $this->linkTo($this->image($page->getImage(), $page->getName(), [ 'class' => 'img-fluid' ]), '/admin/pages/edit/' . $page->id()) ?></td>
+                <td><?= $this->linkTo(sprintf('#%d %s', $page->id(), $page->getName()), '/admin/pages/edit/' . $page->id()) ?></td>
+                <td>
+                    <?= $page->getDescription() ?><br />
+                    <small><?= $page->getContent() ?></small><br />
+                    <small>
+                    <?php foreach ($page->getChoices() as $choice): ?>
+                        <?php $target = $choice->getTarget(); ?>
+                        <?= $choice->getName() ?>
+                        -
+                        <?= $target
+                            ? $this->linkTo('#'.$target->getId() . ' ' . $target->getName(), '/admin/pages/edit/' . $target->id())
+                            : $this->linkTo('(utwórz)', '/admin/pages/create/' . $choice->id()) ?>
+                        |
+                    <?php endforeach; ?>
+                    </small>
+                </td>
+                <td><?= $this->linkTo('edytuj', '/admin/pages/edit/' . $page->id()) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?= $this->linkTo('Utwórz stronę', '/admin/pages/create', [ 'class' => 'btn btn-primary flaticon-add' ]) ?>

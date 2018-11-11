@@ -1,0 +1,183 @@
+[class*="flaticon"]:before {
+    font-size: inherit;
+    margin-right: 0.5em;
+    margin-left: 0;
+}
+
+.input-group-prepend [class*="flaticon"]:before {
+    margin-right: 0;
+}
+
+.input-group-append [class*="flaticon"]:before {
+    margin-left: 0;
+}
+
+.btn :last-child[class*="flaticon"]:before {
+    margin-right: 0;
+}
+
+legend {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+a.external {
+    background: url('../images/links/external.png') no-repeat right center;
+    padding-right: 15px;
+}
+
+.alert {
+    margin-bottom: .5rem;
+}
+
+.alert[class*="flaticon"] {
+    padding-left: 2.5rem;
+}
+
+.alert[class*="flaticon"]:before {
+    margin-left: -1.5rem;
+}
+
+.social a {
+    border: none;
+}
+
+.social .facebook {
+    color: #3b5998;
+}
+
+.social .facebook:hover {
+    color: #5573b2;
+}
+
+.social .twitter {
+    color: #62bdb2;
+}
+
+.social .twitter:hover {
+    color: #7cd7cc;
+}
+
+.social .youtube {
+    color: #c4302b;
+}
+
+.social .youtube:hover {
+    color: #de4a45;
+}
+
+.social a:hover,
+.social a:focus,
+.social a:active {
+    text-decoration: none;
+}
+
+.social .flaticon:before {
+    font-size: 18px;
+}
+
+h1 small, h1 .small {
+    font-size: 60%;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+.card-header > *:last-child,
+.card-body > *:last-child,
+.card-footer > *:last-child {
+    margin-bottom: 0;
+}
+
+.card > .table {
+    margin-bottom: 0;
+}
+
+.visible-hover > * {
+    visibility: hidden;
+}
+
+:hover > .visible-hover * {
+    visibility: visible;
+}
+
+table .form-check {
+    margin-bottom: -.25em;
+}
+
+input[type=number] {
+    text-align: right;
+}
+
+input[type=file] {
+    height: auto;
+}
+
+td > .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.table-justified > * > tr > *:last-child,
+.table-justified > * > tr > *:first-child,
+tr > .wrap-content {
+    width: 1%;
+    white-space: nowrap;
+}
+
+table.dl > * > tr > *:last-child {
+    text-align: right;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.tbody-hover:hover {
+    background-color: rgba(0,0,0,.075);
+}
+
+.btn-navbar {
+    background-color: #47bddd;
+    border-color: #009dcc;
+    color: white;
+}
+
+.progress-bar[aria-valuenow="0"] {
+    color: gray;
+    min-width: 100%;
+    background: transparent;
+    box-shadow: none;
+}
+
+.form-errors {
+    color: #f00;
+    font-weight: bold;
+}
+
+.toolbox {
+    background-color: #e9ecef;
+    padding: .5em 1em;
+    margin-bottom: .5em;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    text-align: right;
+    color: #17a2b8;
+}
+
+button.busy {
+    background: url(../images/ajax-loader.gif) no-repeat 1em center;
+    color: #007bff;
+    cursor: wait;
+}
+
+.modal-d-inline, .modal-d-block {
+    display: none;
+}
+
+.modal .modal-d-inline {
+    display: inline;
+}
+
+.modal .modal-d-block {
+    display: block;
+}
