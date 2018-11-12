@@ -1,4 +1,5 @@
 application/config/environment/development.php
+application/config/environment/xpect.php
 logs
 tmp
 vendor

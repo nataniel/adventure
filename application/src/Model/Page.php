@@ -19,6 +19,9 @@ class Page extends Entity
     /** @Column(type="text") */
     protected $content = '';
 
+    /** @Column(type="string") */
+    protected $status = '';
+
     /** @Column(type="string", nullable=true) */
     protected $image;
 

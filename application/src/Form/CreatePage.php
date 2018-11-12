@@ -18,11 +18,13 @@ class CreatePage extends Form\Base
             new Form\Element\TextField('description', [
                 'label' => 'Krótki opis',
                 'model' => $this->getModel('page'),
+                'required' => 'Podaj tytuł opisowy strony',
             ]),
 
             new Form\Element\TextField('content', [
                 'label' => 'Treść',
                 'model' => $this->getModel('page'),
+                'required' => 'Wpisz treść strony',
             ]),
 
             new Form\Element\Url('image', [

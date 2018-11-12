@@ -13,18 +13,30 @@ $form = $this->createBootstrapForm($this->editPage);
         <?= $form->text('description') ?>
         <?= $form->textarea('content') ?>
         <?= $form->text('image', [ 'input_type' => 'url' ]) ?>
-        <?= $form->button('submit', [ 'button_class' => 'flaticon-save' ]) ?>
-        <?= $this->linkTo('Anuluj', '/admin/pages', [ 'class' => 'btn btn-outline-primary' ])?>
+
+        <div class="form-row">
+            <div class="col-6">
+                <?= $form->text('status', [ 'hint' => 'np. +klątwa, -głód' ]) ?>
+            </div>
+            <div class="col-6 text-right">
+                <?= $form->button('submit', [ 'button_class' => 'flaticon-save' ]) ?>
+                <?= $this->linkTo('Anuluj', '/admin/pages', [ 'class' => 'btn btn-outline-primary' ])?>
+            </div>
+        </div>
+
         <?= $form->end() ?>
 
     </div>
     <div class="col-lg-6">
 
-        <?= $this->render('admin/pages/_sources') ?>
-        <?= $this->image($page->getImage(), $page->getName(), [ 'class' => 'img-fluid' ]) ?>
+       <?= $this->image($page->getImage(), $page->getImage(), [ 'class' => 'img-fluid', 'href' => $page->getImage() ]) ?>
 
     </div>
 </div>
 
 <hr />
 <?= $this->render('admin/pages/_choices') ?>
+
+<hr />
+<?= $this->render('admin/pages/_sources') ?>
+

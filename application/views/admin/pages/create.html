@@ -21,8 +21,10 @@ $form = $this->createBootstrapForm($this->createPage);
     </div>
     <div class="col-lg-6">
 
-        <?= $this->render('admin/pages/_sources') ?>
         <?= $this->image($page->getImage(), $page->getName(), [ 'class' => 'img-fluid' ]) ?>
 
     </div>
 </div>
+
+<hr />
+<?= $this->render('admin/pages/_sources') ?>

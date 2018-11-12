@@ -3,9 +3,9 @@ return [
     'database' => [
         'driver' => 'pdo_mysql',
         'dbname' => 'adventure',
-        'user' => '*',
-        'password' => '*',
-        'host' => 'mysql.rebel.pl',
+        'user' => 'user',
+        'password' => 'password',
+        'host' => 'localhost',
         'charset' => 'utf8',
     ],
 
@@ -13,8 +13,8 @@ return [
      * Base URL for non-http requests and all other cases when
      * the Base URL cannot be determined automatically from $_SERVER
      */
-    'base_url' => 'https://adventure.rebel.pl/',
-    'ssl_required' => true,
+    'base_url' => 'http://adventure.rebel.pl/',
+    'ssl_required' => false,
 
     /**
      * Doctrine configuration settings for Entity Manager

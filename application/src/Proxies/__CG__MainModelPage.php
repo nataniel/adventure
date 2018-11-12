@@ -64,10 +64,10 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'name', 'description', 'content', 'image', 'choices', 'sources', 'id', '_errors', '_readonly'];
+            return ['__isInitialized__', 'name', 'description', 'content', 'status', 'image', 'choices', 'sources', 'id', '_errors', '_readonly'];
         }
 
-        return ['__isInitialized__', 'name', 'description', 'content', 'image', 'choices', 'sources', 'id', '_errors', '_readonly'];
+        return ['__isInitialized__', 'name', 'description', 'content', 'status', 'image', 'choices', 'sources', 'id', '_errors', '_readonly'];
     }
 
     /**
