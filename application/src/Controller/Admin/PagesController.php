@@ -16,6 +16,16 @@ class PagesController extends AbstractController
         ];
     }
 
+    public function deleteAction()
+    {
+        $page = $this->getPageFromParam();
+        $page->destroy();
+
+        return $this->redirectBackOrTo('/admin/pages',
+            sprintf('Strona <strong>%s</strong> została usunięta.', $page),
+            View::FLASH_MESSAGE);
+    }
+
     public function createAction()
     {
         $page = new Page([ 'name' => $this->getRequest()->getQuery('name'), ]);

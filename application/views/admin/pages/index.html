@@ -24,6 +24,7 @@ $pages = $this->pages;
                     </small>
                 </td>
                 <td><?= $this->linkTo('edytuj', '/admin/pages/edit/' . $page->id()) ?></td>
+                <td><?= $this->linkTo('usuń', '/admin/pages/delete/' . $page->id(), [ 'class' => 'text-danger', 'confirm' => 'Czy jesteś pewien? Ta operacja jest nieodwracalna!!' ]) ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
