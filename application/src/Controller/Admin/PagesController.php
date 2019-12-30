@@ -18,17 +18,14 @@ class PagesController extends AbstractController
 
     public function createAction()
     {
-        $page = new Page();
-
-        $choice = $this->getChoiceFromParam();
-        if (!empty($choice)) {
-            $choice->setTarget($page);
-        }
-
+        $page = new Page([ 'name' => $this->getRequest()->getQuery('name'), ]);
         $createPage = new Form\CreatePage($this->getRequest(), [ 'page' => $page, ]);
+
         if ($createPage->isValid()) {
             $page->save();
-            return $this->redirectTo('/admin/pages/edit/' . $page->id(), 'Strona została utworzona.', View::FLASH_SUCCESS);
+            return $this->redirectTo('/admin/pages/edit/' . $page->id(),
+                'Strona została utworzona.',
+                View::FLASH_SUCCESS);
         }
 
         return [

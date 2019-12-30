@@ -10,15 +10,14 @@ class EditPage extends Form\Base
         $this->addFields([
 
             new Form\Element\TextField('name', [
-                'label' => 'Nazwa',
+                'label' => 'Nazwa (identyfikator)',
                 'model' => $this->getModel('page'),
                 'required' => 'Podaj nazwę strony',
             ]),
 
             new Form\Element\TextField('description', [
-                'label' => 'Krótki opis',
+                'label' => 'Tytuł strony',
                 'model' => $this->getModel('page'),
-                'required' => 'Podaj tytuł opisowy strony',
             ]),
 
             new Form\Element\TextArea('content', [
@@ -30,7 +29,6 @@ class EditPage extends Form\Base
             new Form\Element\TextField('status', [
                 'label' => 'Zmiany statusów',
                 'model' => $this->getModel('page'),
-                'required' => 'Wpisz treść strony',
             ]),
 
             new Form\Element\Url('image', [

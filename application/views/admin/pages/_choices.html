@@ -6,31 +6,31 @@ $choices = $page->getChoices();
 $form = $this->createBootstrapForm($this->createChoice);
 ?>
 <h2>Możliwe wybory</h2>
-<?= $form->start() ?>
-<table class="table">
-    <tbody>
-    <?php foreach ($choices as $choice): ?>
-        <tr>
-        <?php if ($choice->id()): ?>
-            <?php $target = $choice->getTarget(); ?>
+<div class="row">
+    <div class="col-lg-6">
 
-            <td><?= $choice->getName() ?></td>
-            <td><?= $choice->getDescription() ?></td>
-            <td><?= $target
-                ? $this->linkTo($target, '/admin/pages/edit/' . $target->id())
-                : $this->linkTo('(utwórz stronę docelową)', '/admin/pages/create/' . $choice->id()) ?></td>
-            <td><?= $this->linkTo('usuń', '/admin/pages/remove-choice/' . $choice->id()) ?></td>
+        <?= $form->start() ?>
+        <?php foreach ($choices as $choice): ?>
+        <div class="form-row">
+            <?php if ($choice->id()): ?>
+                <div class="col-3 mb-2">
+                    <?php $target = $choice->findTargetPage(); ?>
+                    <?= $target
+                            ? $this->linkTo('#' . $choice->getTarget(), '/admin/pages/edit/' . $target->id(), [ 'class' => 'btn btn-outline-success btn-block' ])
+                            : $this->linkTo('#' . $choice->getTarget(), '/admin/pages/create?name=' . $choice->getTarget(), [ 'class' => 'btn btn-outline-warning btn-block' ]) ?>
+                </div>
+                <div class="col-5 p-2"><?= $choice->getDescription() ?></div>
+                <div class="col-2 p-2"><?= $choice->getStatus() ?></div>
+                <div class="col-2"><?= $this->linkTo('Usuń wybór', '/admin/pages/remove-choice/' . $choice->id(), [ 'class' => 'flaticon-delete btn btn-outline-danger btn-block' ]) ?></div>
+            <?php else: ?>
+                <div class="col-3"><?= $form->text('target', [ 'prepend' => '#' ]) ?></div>
+                <div class="col-5"><?= $form->text('description') ?></div>
+                <div class="col-2"><?= $form->text('status', [ 'hint' => 'np. +klątwa' ]) ?></div>
+                <div class="col-2"><?= $form->button('submit', [ 'button_class' => 'flaticon-add btn-block' ]) ?></div>
+            <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+        <?= $form->end() ?>
 
-        <?php else: ?>
-
-            <td><?= $form->text('name') ?></td>
-            <td><?= $form->text('description') ?></td>
-            <td><?= $form->number('target') ?></td>
-            <td><?= $form->button('submit', [ 'button_class' => 'flaticon-add' ]) ?></td>
-
-        <?php endif; ?>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
-<?= $form->end() ?>
+    </div>
+</div>

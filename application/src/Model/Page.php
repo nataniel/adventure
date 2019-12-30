@@ -10,11 +10,11 @@ use E4u\Model\Entity;
  */
 class Page extends Entity
 {
-    /** @Column(type="string") */
+    /** @Column(type="string", unique=true) */
     protected $name;
 
     /** @Column(type="string") */
-    protected $description = '';
+    protected $description;
 
     /** @Column(type="text") */
     protected $content = '';
@@ -33,24 +33,24 @@ class Page extends Entity
     protected $choices;
 
     /**
-     * @var Page\Choice[]
-     * @OneToMany(targetEntity="Main\Model\Page\Choice", mappedBy="target", cascade={"all"})
-     **/
-    protected $sources;
-
-    /**
      * @return string
      */
     public function __toString()
     {
-        return $this->getName();
+        return sprintf('#%s: %s', $this->name, $this->description);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
@@ -62,22 +62,13 @@ class Page extends Entity
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = StringTools::toUrl($name, true);
         return $this;
     }
 
     public function getContent()
     {
         return $this->content;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPermalink()
-    {
-        $txt = StringTools::toUrl($this->getName());
-        return transliterator_transliterate('Any-Latin; Latin-ASCII; Lower()', $txt);
     }
 
     /**
@@ -120,9 +111,9 @@ class Page extends Entity
     /**
      * @return Page\Choice[]
      */
-    public function getSources()
+    public function findSourceChoices()
     {
-        return $this->sources;
+        return Page\Choice::findBy([ 'target' => $this->name ]);
     }
 
     /**
@@ -131,8 +122,8 @@ class Page extends Entity
     public function toUrl()
     {
         return [
-            'name' => $this->getPermalink(),
-            'id' => $this->id(),
+            'name' => $this->name,
+            'id' => $this->id,
             'route' => 'page',
         ];
     }

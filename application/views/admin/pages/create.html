@@ -2,7 +2,7 @@
 /** @var \Main\View\Base $this */
 /** @var \Main\Model\Page $page */
 $page = $this->page;
-$sources = $page->getSources();
+$sources = $page->findSourceChoices();
 $form = $this->createBootstrapForm($this->createPage);
 ?>
 <h1>Tworzenie strony</h1>
@@ -10,12 +10,23 @@ $form = $this->createBootstrapForm($this->createPage);
     <div class="col-lg-6">
 
         <?= $form->start() ?>
-        <?= $form->text('name') ?>
-        <?= $form->text('description') ?>
+        <div class="form-row">
+            <div class="col-3"><?= $form->text('name', [ 'prepend' => '#' ]) ?></div>
+            <div class="col-9"><?= $form->text('description') ?></div>
+        </div>
+
         <?= $form->textarea('content') ?>
         <?= $form->text('image', [ 'input_type' => 'url' ]) ?>
-        <?= $form->button('submit', [ 'button_class' => 'flaticon-save' ]) ?>
-        <?= $this->linkTo('Anuluj', '/admin/pages', [ 'class' => 'btn btn-outline-primary' ])?>
+
+        <div class="form-row">
+            <div class="col-6">
+                <?= $form->text('status', [ 'hint' => 'np. +klątwa, -głód' ]) ?>
+            </div>
+            <div class="col-6 text-right">
+                <?= $form->button('submit', [ 'button_class' => 'flaticon-save' ]) ?>
+                <?= $this->linkTo('Anuluj', '/admin/pages', [ 'class' => 'btn btn-outline-primary' ])?>
+            </div>
+        </div>
         <?= $form->end() ?>
 
     </div>
@@ -27,4 +38,4 @@ $form = $this->createBootstrapForm($this->createPage);
 </div>
 
 <hr />
-<?= $this->render('admin/pages/_sources') ?>
+<?#= $this->render('admin/pages/_sources') ?>

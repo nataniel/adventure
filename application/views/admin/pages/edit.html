@@ -9,8 +9,11 @@ $form = $this->createBootstrapForm($this->editPage);
     <div class="col-lg-6">
 
         <?= $form->start() ?>
-        <?= $form->text('name') ?>
-        <?= $form->text('description') ?>
+        <div class="form-row">
+            <div class="col-3"><?= $form->text('name', [ 'prepend' => '#' ]) ?></div>
+            <div class="col-9"><?= $form->text('description') ?></div>
+        </div>
+
         <?= $form->textarea('content') ?>
         <?= $form->text('image', [ 'input_type' => 'url' ]) ?>
 
@@ -23,7 +26,6 @@ $form = $this->createBootstrapForm($this->editPage);
                 <?= $this->linkTo('Anuluj', '/admin/pages', [ 'class' => 'btn btn-outline-primary' ])?>
             </div>
         </div>
-
         <?= $form->end() ?>
 
     </div>
@@ -39,4 +41,3 @@ $form = $this->createBootstrapForm($this->editPage);
 
 <hr />
 <?= $this->render('admin/pages/_sources') ?>
-

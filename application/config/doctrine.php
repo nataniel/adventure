@@ -26,4 +26,5 @@ return [
     /* Doctrine\ORM\Configuration#setMetadataCacheImpl() */
     /* Doctrine\ORM\Configuration#setQueryCacheImpl() */
     'cache_class' => \Doctrine\Common\Cache\ArrayCache::class,
+    'cache_namespace' => 'adventure',
 ];

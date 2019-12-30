@@ -2,15 +2,15 @@
 /** @var \Main\View\Base $this */
 /** @var \Main\Model\Page $page */
 $page = $this->page;
-$sources = $page->getSources();
+$sources = $page->findSourceChoices();
 ?>
+<div class="container">
 <h2>Strony źródłowe</h2>
 <ul>
     <?php foreach ($sources as $choice): ?>
         <li>
-            <?= $this->linkTo($choice->getParent()->getName(), '/admin/pages/edit/' . $choice->getParent()->id()) ?><br />
-            <small><?= $choice->getName() ?></small>
+            <?= $this->linkTo($choice->getParent(), '/admin/pages/edit/' . $choice->getParent()->id()) ?> - <small><?= $choice->toString() ?></small>
         </li>
     <?php endforeach; ?>
 </ul>
-
+</div>

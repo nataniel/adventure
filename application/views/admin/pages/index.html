@@ -15,12 +15,10 @@ $pages = $this->pages;
                     <small><?= $page->getContent() ?></small><br />
                     <small>
                     <?php foreach ($page->getChoices() as $choice): ?>
-                        <?php $target = $choice->getTarget(); ?>
-                        <?= $choice->getName() ?>
-                        -
+                        <?php $target = $choice->findTargetPage(); ?>
                         <?= $target
-                            ? $this->linkTo('#'.$target->getId() . ' ' . $target->getName(), '/admin/pages/edit/' . $target->id())
-                            : $this->linkTo('(utwórz)', '/admin/pages/create/' . $choice->id()) ?>
+                            ? $this->linkTo($choice->toString(), '/admin/pages/edit/' . $target->id())
+                            : $this->linkTo($choice->toString(), '/admin/pages/create?name=' . $choice->getTarget(), [ 'class' => 'text-warning' ]) ?>
                         |
                     <?php endforeach; ?>
                     </small>

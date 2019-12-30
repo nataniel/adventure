@@ -9,10 +9,9 @@ class CreateChoice extends Form\Base
     {
         $this->addFields([
 
-            new Form\Element\TextField('name', [
-                'label' => 'Nazwa',
+            new Form\Element\Number('target', [
+                'label' => 'Strona docelowa',
                 'model' => $this->getModel('choice'),
-                'required' => 'Podaj nazwę wyboru',
             ]),
 
             new Form\Element\TextField('description', [
@@ -20,13 +19,13 @@ class CreateChoice extends Form\Base
                 'model' => $this->getModel('choice'),
             ]),
 
-            new Form\Element\Number('position', [
-                'label' => 'Pozycja',
+            new Form\Element\TextField('status', [
+                'label' => 'Wymagany status',
                 'model' => $this->getModel('choice'),
             ]),
 
-            new Form\Element\Number('target', [
-                'label' => 'Strona docelowa',
+            new Form\Element\Number('position', [
+                'label' => 'Pozycja',
                 'model' => $this->getModel('choice'),
             ]),
 

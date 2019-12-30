@@ -16,17 +16,14 @@ class Choice extends Entity
      */
     protected $parent;
 
-    /**
-     * @var Page
-     * @ManyToOne(targetEntity="Main\Model\Page", inversedBy="sources")
-     */
+    /** @Column(type="string") */
     protected $target;
 
     /** @Column(type="string") */
-    protected $name;
+    protected $description;
 
     /** @Column(type="string") */
-    protected $description = '';
+    protected $status = '';
 
     /** @Column(type="integer", nullable=true) */
     protected $position;
@@ -51,7 +48,7 @@ class Choice extends Entity
     }
 
     /**
-     * @return Page
+     * @return string
      */
     public function getTarget()
     {
@@ -59,31 +56,20 @@ class Choice extends Entity
     }
 
     /**
-     * @param  Page $target
-     * @param  bool $keepConsistency
-     * @return $this
+     * @return Page|null
      */
-    public function setTarget($target, $keepConsistency = true)
+    public function findTargetPage()
     {
-        $this->_set('target', $target, $keepConsistency);
-        return $this;
+        return Page::findOneBy([ 'name' => $this->target ]);
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param  string $name
+     * @param  string $target
      * @return $this
      */
-    public function setName($name)
+    public function setTarget($target)
     {
-        $this->name = $name;
+        $this->target = $target;
         return $this;
     }
 
@@ -96,6 +82,14 @@ class Choice extends Entity
     }
 
     /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
      * @param  string $description
      * @return $this
      */
@@ -103,5 +97,13 @@ class Choice extends Entity
     {
         $this->description = $description;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return sprintf('#%s: %s', $this->target, $this->description);
     }
 }

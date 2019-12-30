@@ -12,14 +12,14 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
      *      three parameters, being respectively the proxy object to be initialized, the method that triggered the
      *      initialization process and an array of ordered parameters that were passed to that method.
      *
-     * @see \Doctrine\Common\Persistence\Proxy::__setInitializer
+     * @see \Doctrine\Common\Proxy\Proxy::__setInitializer
      */
     public $__initializer__;
 
     /**
      * @var \Closure the callback responsible of loading properties that need to be copied in the cloned object
      *
-     * @see \Doctrine\Common\Persistence\Proxy::__setCloner
+     * @see \Doctrine\Common\Proxy\Proxy::__setCloner
      */
     public $__cloner__;
 
@@ -34,7 +34,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
      * @var array properties to be lazy loaded, with keys being the property
      *            names and values being their default values
      *
-     * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
+     * @see \Doctrine\Common\Proxy\Proxy::__getLazyProperties
      */
     public static $lazyPropertiesDefaults = [];
 
@@ -64,10 +64,10 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'name', 'description', 'content', 'status', 'image', 'choices', 'sources', 'id', '_errors', '_readonly'];
+            return ['__isInitialized__', 'name', 'description', 'content', 'status', 'image', 'choices', 'id', '_errors', '_readonly'];
         }
 
-        return ['__isInitialized__', 'name', 'description', 'content', 'status', 'image', 'choices', 'sources', 'id', '_errors', '_readonly'];
+        return ['__isInitialized__', 'name', 'description', 'content', 'status', 'image', 'choices', 'id', '_errors', '_readonly'];
     }
 
     /**
@@ -231,17 +231,6 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getPermalink()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPermalink', []);
-
-        return parent::getPermalink();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getImage()
     {
 
@@ -286,12 +275,12 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getSources()
+    public function findSourceChoices()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSources', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'findSourceChoices', []);
 
-        return parent::getSources();
+        return parent::findSourceChoices();
     }
 
     /**
@@ -340,39 +329,6 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'offsetExists', [$offset]);
 
         return parent::offsetExists($offset);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function offsetGet($offset)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'offsetGet', [$offset]);
-
-        return parent::offsetGet($offset);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function offsetSet($offset, $value)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'offsetSet', [$offset, $value]);
-
-        return parent::offsetSet($offset, $value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function offsetUnset($offset)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'offsetUnset', [$offset]);
-
-        return parent::offsetUnset($offset);
     }
 
     /**
@@ -532,12 +488,12 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function postUpdate()
+    public function postUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $event)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'postUpdate', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'postUpdate', [$event]);
 
-        return parent::postUpdate();
+        return parent::postUpdate($event);
     }
 
     /**
@@ -670,6 +626,39 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'loadArray', [$attributes, $propertyList]);
 
         return parent::loadArray($attributes, $propertyList);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function offsetGet($offset)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'offsetGet', [$offset]);
+
+        return parent::offsetGet($offset);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function offsetSet($offset, $value)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'offsetSet', [$offset, $value]);
+
+        return parent::offsetSet($offset, $value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function offsetUnset($offset)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'offsetUnset', [$offset]);
+
+        return parent::offsetUnset($offset);
     }
 
     /**
