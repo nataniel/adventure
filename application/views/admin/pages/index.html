@@ -9,7 +9,7 @@ $pages = $this->pages;
         <?php foreach ($pages as $page): ?>
             <tr>
                 <td style="width: 150px"><?= $this->linkTo($this->image($page->getImage(), $page->getName(), [ 'class' => 'img-fluid' ]), '/admin/pages/edit/' . $page->id()) ?></td>
-                <td><?= $this->linkTo(sprintf('#%d %s', $page->id(), $page->getName()), '/admin/pages/edit/' . $page->id()) ?></td>
+                <td><?= $this->linkTo(sprintf('#%s', $page->getName()), '/admin/pages/edit/' . $page->id()) ?></td>
                 <td>
                     <?= $page->getDescription() ?><br />
                     <small><?= $page->getContent() ?></small><br />
