@@ -1,12 +1,12 @@
 <?php
-/** @var \Main\View\Base $this */
-/** @var \Main\Model\Page $page */
+/** @var Main\View\Base $this */
+/** @var Main\Model\Page $page */
 $page = $this->page;
 $form = $this->createBootstrapForm($this->editPage);
 ?>
 <h1>Edycja strony</h1>
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-hd-6 col-lg-9">
 
         <?= $form->start() ?>
         <div class="form-row">
@@ -29,7 +29,7 @@ $form = $this->createBootstrapForm($this->editPage);
         <?= $form->end() ?>
 
     </div>
-    <div class="col-lg-6">
+    <div class="col-hd-6 col-lg-3">
 
        <?= $this->image($page->getImage(), $page->getImage(), [ 'class' => 'img-fluid', 'href' => $page->getImage() ]) ?>
 
