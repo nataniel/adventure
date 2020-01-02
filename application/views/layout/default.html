@@ -1,5 +1,5 @@
 <?php
-/** @var \Main\View\Base $this */
+/** @var Main\View\Base $this */
 ?>
 <?= $this->_('doctype') ?>
 <html lang="pl">
@@ -13,7 +13,7 @@
 
 <?= $this->render('layout/_navbar') ?>
 <div class="container">
-    <main role="main">
+    <main role="main" class="main">
 
         <?= $this->render('layout/_flash') ?>
         <?= $this->getPartial('content') ?>

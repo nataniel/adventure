@@ -32,7 +32,7 @@ return [
         'options' => [
             'route'    => '/:module[/:controller[/:action[/:id[/:param-1[/:param-2[/:param-3]]]]]]',
             'constraints' => [
-                'module'     => 'play|admin',
+                'module'     => 'game|admin',
                 'controller' => '\w[\w\-]*',
                 'action'     => '\w[\w\-]*',
                 'id'          => '\d+',

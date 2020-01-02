@@ -1,0 +1,26 @@
+<?php
+/** @var Main\View\Base $this */
+/** @var Main\Model\Game $game */
+$game = $this->game;
+$page = $game->getCurrentPage();
+?>
+<div class="row">
+    <div class="col-hd-6 col-lg-9">
+
+        <h1><?= $this->getTitle() ?></h1>
+        <?= $page->getContent() ?>
+
+        <hr />
+        <ul>
+        <?php foreach ($game->getAvailableChoices() as $choice): ?>
+            <li><?= $this->linkTo($choice->getDescription(), '/game/play?choice=' . $choice->id()) ?></li>
+        <?php endforeach; ?>
+        </ul>
+
+    </div>
+    <div class="col-hd-6 col-lg-3">
+
+        <?= $this->render('game/play/_sidebar') ?>
+
+    </div>
+</div>

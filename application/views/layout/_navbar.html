@@ -1,7 +1,7 @@
 <?php
-/** @var \Main\View\Base $this */
+/** @var Main\View\Base $this */
 ?>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
     <div class="container">
         <?= $this->linkTo('HOME', '/', [ 'class' => 'navbar-brand' ])?>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -9,7 +9,7 @@
                 <?= $this->tag('li', [ 'class' => 'nav-item' . ($this->getActiveModule() == 'admin' ? ' active' : '') ],
                     $this->linkTo('Administracja', '/admin', [ 'class' => 'nav-link' ])) ?>
                 <?= $this->tag('li', [ 'class' => 'nav-item' . ($this->getActiveModule() == 'play' ? ' active' : '') ],
-                    $this->linkTo('Rozgrywka', '/play', [ 'class' => 'nav-link' ])) ?>
+                    $this->linkTo('Rozgrywka', '/game', [ 'class' => 'nav-link' ])) ?>
             </ul>
         </div>
     </div>

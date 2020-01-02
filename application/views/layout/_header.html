@@ -1,5 +1,5 @@
 <?php
-/** @var \Main\View\Base $this */
+/** @var Main\View\Base $this */
 ?>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -33,10 +33,6 @@
 <?= $this->stylesheets([ 'bootstrap.min' ], 'bootstrap/css') ?>
 <?= $this->scripts([ 'bootstrap.min' ], [ 'path' => 'bootstrap/js', 'exec' => 'defer' ]) ?>
 
-<!-- http://getcontenttools.com/getting-started -->
-<?= $this->stylesheets([ 'content-tools.min', 'editor' ], 'editor') ?>
-<?= $this->scripts([ 'content-tools.min', 'editor' ], [ 'path' => 'editor', 'exec' => 'defer' ]) ?>
-
 <!-- https://stackoverflow.com/questions/26960703/how-to-change-the-color-of-header-bar-and-address-bar-in-newest-android-chrome-v -->
 <meta name="theme-color" content="#007bff">
 <meta name="msapplication-navbutton-color" content="#007bff">
@@ -44,6 +40,9 @@
 
 <!-- http://www.flaticon.com/ -->
 <?= $this->stylesheets([ 'flaticon' ], 'flaticon') ?>
+
+<!-- https://www.tiny.cloud -->
+<?= $this->scripts([ 'tinymce.min' ], 'tinymce') ?>
 
 <?= $this->stylesheets([ 'application', 'layout' ]) ?>
 <?= $this->scripts([ 'application' ], [ 'exec' => 'defer' ]) ?>

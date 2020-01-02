@@ -62,7 +62,9 @@ class Page extends Entity
      */
     public function setName($name)
     {
-        $this->name = StringTools::toUrl($name, true);
+        $this->name = !empty($name)
+            ? StringTools::toUrl(trim($name, '#'), true)
+            : null;
         return $this;
     }
 
@@ -114,6 +116,14 @@ class Page extends Entity
     public function findSourceChoices()
     {
         return Page\Choice::findBy([ 'target' => $this->name ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**

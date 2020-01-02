@@ -1,6 +1,7 @@
 <?php
 namespace Main\Model\Page;
 
+use E4u\Common\StringTools;
 use E4u\Model\Entity;
 use Main\Model\Page;
 
@@ -69,7 +70,7 @@ class Choice extends Entity
      */
     public function setTarget($target)
     {
-        $this->target = $target;
+        $this->target = StringTools::toUrl(trim($target, '#'), true);
         return $this;
     }
 

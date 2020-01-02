@@ -1,0 +1,24 @@
+<?php
+/** @var Main\View\Base $this */
+/** @var Main\Model\Game $game */
+$game = $this->game;
+$page = $game->getCurrentPage();
+?>
+<?= $this->image($page->getImage(), $page->getImage(), [ 'class' => 'img-fluid', 'href' => $page->getImage() ]) ?>
+
+<hr />
+<dl class="row">
+    <dt class="col-sm-3">player_name</dt>
+    <dd class="col-sm-9"><?= $game->getPlayerName() ?></dd>
+    <dt class="col-sm-3">current_page</dt>
+    <dd class="col-sm-9"><?= $this->linkTo($page, '/admin/pages/edit/' . $page->id(), [ 'target' => '_blank', ]) ?></dd>
+    <dt class="col-sm-3">statuses</dt>
+    <dd class="col-sm-9">
+        <?php foreach ($game->getStatuses() as $status): ?>
+            <span class="badge badge-secondary">+<?= $status ?></span>
+        <?php endforeach; ?>
+    </dd>
+</dl>
+
+<hr />
+<?= $this->linkTo('Reset current game', '/game/start/reset', [ 'class' => 'btn btn-outline-danger' ]) ?>

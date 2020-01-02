@@ -57,7 +57,7 @@ class PagesController extends AbstractController
         $createChoice = new Form\CreateChoice($this->getRequest(), [ 'choice' => $choice, ]);
         if ($createChoice->isValid()) {
             $choice->save();
-            return $this->redirectTo('/admin/pages/edit/' . $page->id(), 'Wybór został dodany.', View::FLASH_SUCCESS);
+            return $this->redirectBackOrTo('/admin/pages/edit/' . $page->id(), 'Wybór został dodany.', View::FLASH_SUCCESS);
         }
 
         return [

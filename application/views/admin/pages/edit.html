@@ -41,3 +41,23 @@ $form = $this->createBootstrapForm($this->editPage);
 
 <hr />
 <?= $this->render('admin/pages/_sources') ?>
+
+<script type="text/javascript">
+
+    var editor = tinymce.get('editpage_content');
+    if (editor !== null) {
+        editor.destroy();
+    }
+
+    tinymce.init({
+        selector: '#editpage_content',
+        toolbar: 'bold italic strikethrough blockquote | alignleft aligncenter alignright | code removeformat',
+        plugins: [ 'lists', 'autolink', 'code', 'preview' ],
+        content_css: '<?= $this->urlTo('/stylesheets/editor.css') ?>',
+        language: 'pl',
+        menubar: false,
+        statusbar: false,
+        resize: true
+    });
+
+</script>

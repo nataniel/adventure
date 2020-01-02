@@ -1,5 +1,5 @@
 <?php
-/** @var \Main\View\Base $this */
+/** @var Main\View\Base $this */
 /** @var \Main\Model\Page $page */
 $page = $this->page;
 $sources = $page->findSourceChoices();
@@ -37,5 +37,22 @@ $form = $this->createBootstrapForm($this->createPage);
     </div>
 </div>
 
-<hr />
-<?#= $this->render('admin/pages/_sources') ?>
+<script type="text/javascript">
+
+    var editor = tinymce.get('createpage_content');
+    if (editor !== null) {
+        editor.destroy();
+    }
+
+    tinymce.init({
+        selector: '#createpage_content',
+        toolbar: 'bold italic strikethrough blockquote | alignleft aligncenter alignright | code removeformat',
+        plugins: [ 'lists', 'autolink', 'code', 'preview' ],
+        content_css: '<?= $this->urlTo('/stylesheets/editor.css') ?>',
+        language: 'pl',
+        menubar: false,
+        statusbar: false,
+        resize: true
+    });
+
+</script>
