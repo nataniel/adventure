@@ -50,7 +50,7 @@ class PagesController extends AbstractController
         $editPage = new Form\EditPage($this->getRequest(), [ 'page' => $page, ]);
         if ($editPage->isValid()) {
             $page->save();
-            return $this->redirectTo('/admin/pages', 'Zmiany zostały zapisane.', View::FLASH_SUCCESS);
+            return $this->redirectToSelf('Zmiany zostały zapisane.', View::FLASH_SUCCESS);
         }
 
         $choice = new Page\Choice([ 'parent' => $page ]);
