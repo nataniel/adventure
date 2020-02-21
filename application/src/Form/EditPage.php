@@ -23,7 +23,6 @@ class EditPage extends Form\Base
             new Form\Element\TextArea('content', [
                 'label' => 'Treść',
                 'model' => $this->getModel('page'),
-                'required' => 'Wpisz treść strony',
             ]),
 
             new Form\Element\TextField('status', [

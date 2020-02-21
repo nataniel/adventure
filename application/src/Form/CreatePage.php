@@ -23,7 +23,6 @@ class CreatePage extends Form\Base
             new Form\Element\TextField('content', [
                 'label' => 'Treść',
                 'model' => $this->getModel('page'),
-                'required' => 'Wpisz treść strony',
             ]),
 
             new Form\Element\TextField('status', [

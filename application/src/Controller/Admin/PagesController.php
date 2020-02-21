@@ -9,7 +9,7 @@ class PagesController extends AbstractController
 {
     public function indexAction()
     {
-        $pages = Page::getRepository()->findAll();
+        $pages = Page::getRepository()->findBy([], [ 'name' => 'ASC' ]);
 
         return [
             'pages' => $pages,
