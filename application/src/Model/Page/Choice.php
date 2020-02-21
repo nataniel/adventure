@@ -20,7 +20,7 @@ class Choice extends Entity
     /** @Column(type="string") */
     protected $target;
 
-    /** @Column(type="string") */
+    /** @Column(type="text") */
     protected $description;
 
     /** @Column(type="string") */

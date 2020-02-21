@@ -14,9 +14,10 @@ class CreateChoice extends Form\Base
                 'model' => $this->getModel('choice'),
             ]),
 
-            new Form\Element\TextField('description', [
+            new Form\Element\TextArea('description', [
                 'label' => 'Krótki opis',
                 'model' => $this->getModel('choice'),
+                'rows' => 3,
             ]),
 
             new Form\Element\TextField('status', [

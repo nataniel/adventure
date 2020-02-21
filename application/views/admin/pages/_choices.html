@@ -24,7 +24,7 @@ $form = $this->createBootstrapForm($this->createChoice);
                 <div class="col-2"><?= $this->linkTo('Usuń wybór', '/admin/pages/remove-choice/' . $choice->id(), [ 'class' => 'flaticon-delete btn btn-outline-danger btn-block' ]) ?></div>
             <?php else: ?>
                 <div class="col-3"><?= $form->text('target', [ 'prepend' => '#' ]) ?></div>
-                <div class="col-5"><?= $form->text('description') ?></div>
+                <div class="col-5"><?= $form->textarea('description', [ 'rows' => 3, ]) ?></div>
                 <div class="col-2"><?= $form->text('status', [ 'hint' => 'np. +klątwa' ]) ?></div>
                 <div class="col-2"><?= $form->button('submit', [ 'button_class' => 'flaticon-add btn-block' ]) ?></div>
             <?php endif; ?>
