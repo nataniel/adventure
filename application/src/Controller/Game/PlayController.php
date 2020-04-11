@@ -8,12 +8,12 @@ class PlayController extends AbstractController
 {
     public function indexAction()
     {
-        $game = $this->getCurrentGame();
-        $page = $game->getCurrentPage();
+        $session = $this->getCurrentGameSession();
+        $page = $session->getLoadedPage();
 
         if ($choice = (int)$this->getRequest()->getQuery('choice')) {
             try {
-                $game->applyChoice($choice);
+                $session->applyChoice($choice);
                 return $this->redirectTo('/game/play');
             }
             catch (Game\Exception $ex) {
@@ -23,7 +23,7 @@ class PlayController extends AbstractController
 
         return [
             'title' => $page->getDescription(),
-            'game' => $game,
+            'session' => $session,
         ];
     }
 }

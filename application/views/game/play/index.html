@@ -1,8 +1,8 @@
 <?php
 /** @var Main\View\Base $this */
-/** @var Main\Model\Game $game */
-$game = $this->game;
-$page = $game->getCurrentPage();
+/** @var Main\Model\Game\Session $session */
+$session = $this->session;
+$page = $session->getLoadedPage();
 ?>
 <div class="row">
     <div class="col-hd-6 col-lg-9">
@@ -12,7 +12,7 @@ $page = $game->getCurrentPage();
 
         <hr />
         <ul>
-        <?php foreach ($game->getAvailableChoices() as $choice): ?>
+        <?php foreach ($session->getAvailableChoices() as $choice): ?>
             <li><?= $this->linkTo($choice->getDescription(), '/game/play?choice=' . $choice->id()) ?></li>
         <?php endforeach; ?>
         </ul>

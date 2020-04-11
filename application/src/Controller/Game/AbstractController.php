@@ -7,16 +7,16 @@ use E4u\Response;
 abstract class AbstractController extends \Main\Controller\AbstractController
 {
     /**
-     * @return Game|Response\Redirect
+     * @return Game\Session|Response\Redirect
      */
-    protected function getCurrentGame()
+    protected function getCurrentGameSession()
     {
         /** @var Game $game */
-        $game = $_SESSION['game'];
-        if (empty($game)) {
+        $session = $_SESSION['game_session'];
+        if (empty($session)) {
             return $this->redirectBackOrTo('/game/start');
         }
 
-        return $game;
+        return $session;
     }
 }

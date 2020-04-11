@@ -13,9 +13,9 @@ class StartController extends AbstractController
         if ($startGame->isValid()) {
 
             $player = $startGame->getValue('player_name');
-            $game = new Game($player);
+            $session = new Game\Session($player);
 
-            $_SESSION['game'] = $game;
+            $_SESSION['game_session'] = $session;
             return $this->redirectTo('/game/play', 'Gra została rozpoczęta.', View::FLASH_SUCCESS);
 
         }
@@ -28,10 +28,10 @@ class StartController extends AbstractController
 
     public function resetAction()
     {
-        $current = $this->getCurrentGame();
-        $new = new Game($current->getPlayerName());
+        $current = $this->getCurrentGameSession();
+        $session = new Game\Session($current->getPlayerName());
 
-        $_SESSION['game'] = $new;
+        $_SESSION['game_session'] = $session;
         return $this->redirectTo('/game/play', 'Gra została zresetowana.', View::FLASH_SUCCESS);
     }
 }
