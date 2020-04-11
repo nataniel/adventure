@@ -29,7 +29,7 @@ return [
 
 
     /**
-     * https://developers.facebook.com/apps/135189156611879/dashboard/?business_id=281132869070424
+     * https://developers.facebook.com/apps/536959080539510/dashboard/
      */
     'facebook' => [
         'app_id' => '536959080539510',
@@ -45,7 +45,7 @@ return [
     ],
 
     /**
-     * https://console.developers.google.com/apis/credentials?project=silicon-cocoa-255607
+     * https://console.developers.google.com/apis/credentials?project=adventure-273917
      */
     'google' => [
         'client_id' => '708272906850-ah71j2864oge9bfan3fve2nfih9hntea.apps.googleusercontent.com',
