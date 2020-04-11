@@ -1,5 +1,10 @@
 {
   "name": "nataniel/adventure",
+  "config": {
+    "platform": {
+      "php": "7.2.13"
+    }
+  },
   "repositories": [
     {
       "type": "git",
