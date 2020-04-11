@@ -1,3 +1,6 @@
+<?php
+/** @var Main\View\Base $this */
+?>
 <?= $this->_('doctype') ?>
 <html lang="pl">
 <head>
@@ -7,17 +10,16 @@
 
 <body class="layout-security" id="<?= $this->controllerID() ?>"
       itemscope itemtype="http://schema.org/WebPage">
-<div class="wrapper">
 
-    <div id="<?= $this->actionID() ?>" class="page">
-        <main class="container">
+<?= $this->render('layout/_navbar') ?>
+<div class="container">
+    <main role="main" class="main">
 
-            <?= $this->render('layout/_flash') ?>
-            <?= $this->getPartial('content') ?>
+        <?= $this->render('layout/_flash') ?>
+        <?= $this->getPartial('content') ?>
 
-        </main>
-    </div>
-
+    </main>
 </div>
+
 </body>
 </html>

@@ -11,8 +11,8 @@
   },
   "require": {
     "php": "^7.0",
-    "nataniel/e4u-framework": "dev-master",
     "ext-intl": "*",
+    "nataniel/e4u-framework": "dev-master",
     "tinymce/tinymce": "^5.1"
   },
   "autoload": {

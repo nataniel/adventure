@@ -1,170 +1,20 @@
 <?php
 namespace Main\Controller;
 
-use E4u\Application\Controller\Security as E4uSecurity,
-    E4u\Authentication\Identity,
-    E4u\Authentication\Exception,
-    E4u\Application\View,
-    E4u\Response,
+use E4u\Authentication\Social;
+use E4u\Application\View,
     Main\Model\User;
+use Main\Configuration;
 
-class SecurityController extends AbstractController implements E4uSecurity
+class SecurityController extends AbstractController
 {
     protected $requiredPrivileges = [ ];
     protected $defaultLayout = 'layout/security';
 
-    public function passwordAction()
+    public function indexAction()
     {
-        return $this->redirectTo('security/login');
-    }
-
-    /**
-     * @return User|Response\Response
-     */
-    private function getUserFromParam()
-    {
-        $id = (int)$this->getParam('id');
-        if (empty($id)) {
-            return $this->redirectTo('/', 'Nieprawidłowy identyfikator użytkownika.', View::FLASH_ERROR);
-        }
-
-        $user = User::find($id);
-        if (null === $user) {
-            return $this->redirectTo('/', 'Nieprawidłowy identyfikator użytkownika.', View::FLASH_ERROR);
-        }
-
-        return $user;
-    }
-
-    /**
-     * @param  User $user
-     * @return $this|Response\Response
-     */
-    private function verifyToken($user)
-    {
-        $value = $this->getRequest()->getQuery('token');
-        if (empty($value)) {
-            return $this->redirectTo('/', 'Nieprawidłowy token użytkownika.', View::FLASH_ERROR);
-        }
-
-        $token = User\Token::findOneByUserTypeAndHash($user->id(), 'reset_password', $value);
-        if (null === $token) {
-            return $this->redirectTo('/', 'Nieprawidłowy token użytkownika.', View::FLASH_ERROR);
-        }
-
-        return $this;
-    }
-
-    public function resetAction()
-    {
-        $user = $this->getUserFromParam();
-        $this->verifyToken($user);
-
-        $form = new \Main\Form\Security\ResetPassword($this->getRequest());
-        $form->getElement('login')->setValue(sprintf('%s (%s)', $user->getLogin(), $user->getEmail()));
-
-        if ($form->isValid()) {
-            $user->setPassword($form->getValue('password'))->save();
-            return $this->redirectTo('security/login',
-                "Hasło zostało zmienione. Zaloguj się używając nowego hasła.",
-                View::FLASH_SUCCESS);
-        }
-
         return [
-            'form' => $form,
-            'title' => 'Nowe hasło',
-            'user' => $user,
-        ];
-    }
-
-    /**
-     * @param  User $user
-     * @return Response\Redirect
-     */
-    private function loginSuccess(User $user)
-    {
-        $message = sprintf(
-            'Zalogowano jako <strong>%s</strong> (%s).',
-            $user->getPreference('company') ?: $user->getName(), $user->getLogin());
-        $this->getView()->addFlash($message, View::FLASH_SUCCESS);
-
-        if (isset($_SESSION['redirect_to'])) {
-            $redirect = $_SESSION['redirect_to'];
-            unset($_SESSION['redirect_to']);
-            return $this->redirectTo($redirect);
-        }
-
-        return $this->redirectBackOrTo('/');
-    }
-
-    private function loginForm()
-    {
-        $form = new \Main\Form\Security\Login($this->getRequest());
-
-        if ($form->isValid()) {
-            $values = $form->getValues();
-            try {
-
-                /** @var User $user */
-                $user = $this->getAuthentication()->login($values['login'], $values['password'], $values['remember']);
-                return $this->loginSuccess($user);
-
-            }
-            catch (Exception\UserNotActiveException $e) {
-                $form->addError('Użytkownik jest nieaktywny. <strong>Skontaktuj się z działem obsługi klienta</strong>, aby aktywować konto.', 'password');
-            }
-            catch (Exception\AuthenticationException $e) {
-                $form->addError('Nieprawidłowa nazwa użytkownika lub hasło.', 'password');
-            }
-        }
-
-        return $form;
-    }
-
-    /**
-     * @return \Main\Form\Security\ForgotPassword|Response\Response
-     */
-    private function passwordForm()
-    {
-        $form = new \Main\Form\Security\ForgotPassword($this->getRequest());
-        if ($form->isValid()) {
-            $user = User::getRepository()->findOneByLogin($form->getValue('login'));
-            if (!empty($user)) {
-
-                $token = User\Token::create([
-                    'user' => $user,
-                    'type' => 'reset_password',
-                    'expires_at' => (new \DateTime())->modify('+7 day'),
-                ]);
-
-                // SEND EMAIL TO $user
-                \Main\Model\Mailer\Template::sendTemplate('security/ForgotPassword', [
-                    'user' => $user->toArray(),
-                    'url' => $this->urlTo('security/reset/' . $user->id() . '?token=' .  $token, true),
-                ]);
-
-                return $this->redirectTo('security/login', 'Na adres użytkownika
-                    została wysłana wiadomość z instrukcją dot. zmiany hasła.
-                    Jeżeli e-mail nie dotrze w ciągu 10 minut, skontaktuj się z nami.', View::FLASH_SUCCESS);
-
-            }
-            else {
-                $form->addError('Nie znaleziono takiego użytkownika.', 'login');
-            }
-        }
-
-        return $form;
-    }
-
-    public function loginAction()
-    {
-        $loginForm = $this->loginForm();
-        $passwordForm = $this->passwordForm();
-
-        return [
-            'title' => 'Zaloguj się',
-            'passwordForm' => $passwordForm,
-            'loginForm' => $loginForm,
+            'title' => 'Zaloguj się...',
         ];
     }
 
@@ -173,6 +23,154 @@ class SecurityController extends AbstractController implements E4uSecurity
         $this->getAuthentication()->logout();
         return $this->redirectTo('/',
             "Zostałeś wylogowany.",
-            \E4u\Application\View::FLASH_SUCCESS);
+            View::FLASH_SUCCESS);
+    }
+
+    public function googleAction()
+    {
+        $helper = new Social\Google(Configuration::googleConfig(), $this->getRequest());
+        if ($helper->loginFromRedirect()) {
+
+            $user = $this->getUserFromSocial($helper, User\Profile\Google::class);
+            $this->setAvatarIfEmpty($user, $helper->getPicture());
+
+            $user->save();
+            return $this->loginAs($user);
+
+        }
+
+        $loginUrl = $helper->getLoginUrl();
+        return $this->redirectTo($loginUrl);
+    }
+
+    public function microsoftAction()
+    {
+        $helper = new Social\Microsoft(Configuration::microsoftConfig(), $this->getRequest());
+        if ($helper->loginFromRedirect()) {
+
+            $user = $this->getUserFromSocial($helper, User\Profile\Microsoft::class);
+            $this->setAvatarIfEmpty($user, $helper->getPicture());
+
+            $user->save();
+            return $this->loginAs($user);
+
+        }
+
+        $loginUrl = $helper->getLoginUrl();
+        return $this->redirectTo($loginUrl);
+    }
+
+    public function facebookAction()
+    {
+        $helper = new Social\Facebook(Configuration::facebookConfig(), $this->getRequest());
+        if ($helper->loginFromRedirect()) {
+
+            $user = $this->getUserFromSocial($helper, User\Profile\Facebook::class);
+            $this->setAvatarIfEmpty($user, $helper->getPicture());
+
+            $user->save();
+            return $this->loginAs($user);
+
+        }
+
+        $loginUrl = $helper->getLoginUrl();
+        return $this->redirectTo($loginUrl);
+    }
+
+    public function twitterAction()
+    {
+        $helper = new Social\Twitter(Configuration::twitterConfig(), $this->getRequest());
+        if ($helper->loginFromRedirect()) {
+
+            $user = $this->getUserFromSocial($helper, User\Profile\Twitter::class);
+            $this->setAvatarIfEmpty($user, $helper->getPicture());
+
+            $user->save();
+            return $this->loginAs($user);
+
+        }
+
+        $loginUrl = $helper->getLoginUrl();
+        return $this->redirectTo($loginUrl);
+    }
+
+    public function steamAction()
+    {
+        $helper = new Social\Steam(Configuration::steamConfig(), $this->getRequest());
+        if ($helper->loginFromRedirect()) {
+
+            $user = $this->getUserFromSocial($helper, User\Profile\Steam::class);
+            $this->setAvatarIfEmpty($user, $helper->getPicture());
+
+            $user->save();
+            return $this->loginAs($user);
+
+        }
+
+        $loginUrl = $helper->getLoginUrl();
+        return $this->redirectTo($loginUrl);
+    }
+
+    private function loginAs(User $user)
+    {
+        if (!$user->isActive()) {
+            $this->redirectTo('/',
+                sprintf('Użytkownik <strong>%s</strong> jest nieaktywny. <strong>Skontaktuj się z działem obsługi klienta</strong>, aby aktywować konto.', $user->getLogin()),
+                View::FLASH_ERROR);
+        }
+
+        $this->getAuthentication()->loginAs($user);
+        return $this->redirectBackOrTo('/', [
+            'Zalogowano jako <strong>%s</strong> (%s).',
+            $user->getName(),
+            $user->getLogin(),
+        ], View::FLASH_SUCCESS);
+    }
+
+    /**
+     * @param User $user
+     * @param string $picture
+     */
+    private function setAvatarIfEmpty(User $user, $picture)
+    {
+//        if (empty($user->getAvatar()) && !empty($picture)) {
+//            $user->setAvatar($picture);
+//        }
+    }
+
+    /**
+     * @param  Social\Helper $social
+     * @param  string $profileClass
+     * @return User
+     */
+    private function getUserFromSocial(Social\Helper $social, $profileClass)
+    {
+        // Profile already exists - login as connected user
+        $profile = User\Profile::getRepository()->findOneByTypeAndProfileId($profileClass, $social->getId());
+        if (!empty($profile)) {
+            return $profile->getUser();
+        }
+
+        $profile = new $profileClass([
+            'profile_id' => $social->getId(),
+        ]);
+
+        // Profile does not exists, but maybe user with primary email exists
+        $user = User::getRepository()->findOneByLogin($social->getEmail());
+        if (!empty($user)) {
+            $user->addToProfiles($profile);
+            return $user;
+        }
+
+        // No profile, no user - create new user with no password
+        return new User([
+            'login' => $social->getEmail(),
+            'email' => $social->getEmail(),
+            'name' => trim($social->getFirstName() . ' ' . $social->getLastName()),
+            # 'avatar' => $social->getPicture(),
+            'locale' => $social->getLocale(),
+            'profiles' => [ $profile ],
+            'active' => true,
+        ]);
     }
 }
