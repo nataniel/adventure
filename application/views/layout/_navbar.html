@@ -7,10 +7,10 @@ $user = $this->getCurrentUser();
         <?= $this->linkTo('HOME', '/', [ 'class' => 'navbar-brand' ])?>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <?= $this->tag('li', [ 'class' => 'nav-item' . ($this->getActiveModule() == 'admin' ? ' active' : '') ],
-                    $this->linkTo('Administracja', '/admin', [ 'class' => 'nav-link' ])) ?>
                 <?= $this->tag('li', [ 'class' => 'nav-item' . ($this->getActiveModule() == 'play' ? ' active' : '') ],
                     $this->linkTo('Rozgrywka', '/game', [ 'class' => 'nav-link' ])) ?>
+                <?= $this->tag('li', [ 'class' => 'nav-item' . ($this->getActiveModule() == 'admin' ? ' active' : '') ],
+                    $this->linkTo('Administracja', '/admin', [ 'class' => 'nav-link' ])) ?>
                 <?= !empty($user)
                     ? $this->tag('li', [ 'class' => 'nav-item' ],
                       $this->linkTo('Logout', '/security/logout', [ 'class' => 'nav-link' ]))

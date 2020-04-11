@@ -27,13 +27,12 @@ return [
 
     'show_errors' => false,
 
-
     /**
      * https://developers.facebook.com/apps/536959080539510/dashboard/
      */
     'facebook' => [
         'app_id' => '536959080539510',
-        'app_secret' => '9e094cca94677bdcc677623b39e86af2',
+        'app_secret' => '**************',
         'default_graph_version' => 'v6.0',
     ],
 
@@ -49,6 +48,6 @@ return [
      */
     'google' => [
         'client_id' => '708272906850-ah71j2864oge9bfan3fve2nfih9hntea.apps.googleusercontent.com',
-        'client_secret' => 'L160OtK1axHPEUiKFmtAak_F',
+        'client_secret' => '**************',
     ],
 ];

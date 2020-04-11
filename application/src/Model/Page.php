@@ -137,4 +137,14 @@ class Page extends Entity
             'route' => 'page',
         ];
     }
+
+    /**
+     * @param  string $name
+     * @return bool
+     */
+    public static function isValidName($name)
+    {
+        $page = Page::findOneBy([ 'name' => $name ]);
+        return !empty($page);
+    }
 }

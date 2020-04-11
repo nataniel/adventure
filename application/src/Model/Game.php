@@ -115,6 +115,10 @@ class Game
      */
     private function setCurrentPage($name)
     {
+        if (!Page::isValidName($name)) {
+            throw new Game\Exception(sprintf('Page #%s is missing. Game master needs to create it.', $name));
+        }
+
         $this->current_name = $name;
         $this->current_page = null;
         return $this;
@@ -184,14 +188,16 @@ class Game
      */
     private function loadCurrentPage()
     {
-        if (empty($this->current_page)) {
-            $this->current_page = Page::findOneBy([ 'name' => $this->current_name ]);
+        if (!empty($this->current_page)) {
+            return $this;
         }
 
-        if (empty($this->current_page)) {
-            throw new Game\Exception(sprintf('Page #%s is missing.', $this->current_name));
+        $page = Page::findOneBy([ 'name' => $this->current_name ]);
+        if (empty($page)) {
+            throw new Game\Exception(sprintf('Page #%s is missing. Restart game?', $this->current_name));
         }
 
+        $this->current_page = $page;
         return $this;
     }
 
