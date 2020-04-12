@@ -66,10 +66,10 @@ class User extends \Main\Model\User implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'email', 'name', 'locale', 'active', 'profiles', 'privileges', 'login', 'encrypted_password', 'created_at', 'updated_at', 'id', '_errors', '_readonly'];
+            return ['__isInitialized__', 'email', 'name', 'locale', 'active', 'profiles', 'privileges', 'operators', 'created_games', 'login', 'encrypted_password', 'created_at', 'updated_at', 'id', '_errors', '_readonly'];
         }
 
-        return ['__isInitialized__', 'email', 'name', 'locale', 'active', 'profiles', 'privileges', 'login', 'encrypted_password', 'created_at', 'updated_at', 'id', '_errors', '_readonly'];
+        return ['__isInitialized__', 'email', 'name', 'locale', 'active', 'profiles', 'privileges', 'operators', 'created_games', 'login', 'encrypted_password', 'created_at', 'updated_at', 'id', '_errors', '_readonly'];
     }
 
     /**
@@ -273,6 +273,39 @@ class User extends \Main\Model\User implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'hasPassword', []);
 
         return parent::hasPassword();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOperatedGames()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOperatedGames', []);
+
+        return parent::getOperatedGames();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOperatorFor($game)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOperatorFor', [$game]);
+
+        return parent::getOperatorFor($game);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCreatedGames()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedGames', []);
+
+        return parent::getCreatedGames();
     }
 
     /**

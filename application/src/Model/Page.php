@@ -6,11 +6,19 @@ use E4u\Model\Entity;
 
 /**
  * @Entity
- * @Table(name="pages")
+ * @Table(name="pages", uniqueConstraints={
+ *     @UniqueConstraint(name="game_page", columns={"game_id", "name"})
+ * })
  */
 class Page extends Entity
 {
-    /** @Column(type="string", unique=true) */
+    /**
+     * @var Game
+     * @ManyToOne(targetEntity="Main\Model\Game", inversedBy="pages")
+     */
+    protected $game;
+
+    /** @Column(type="string") */
     protected $name;
 
     /** @Column(type="string") */
@@ -24,6 +32,12 @@ class Page extends Entity
 
     /** @Column(type="string", nullable=true) */
     protected $image;
+
+    /** @Column(type="datetime", nullable=true) */
+    protected $created_at;
+
+    /** @Column(type="datetime", nullable=true) */
+    protected $updated_at;
 
     /**
      * @var Page\Choice[]
@@ -136,15 +150,5 @@ class Page extends Entity
             'id' => $this->id,
             'route' => 'page',
         ];
-    }
-
-    /**
-     * @param  string $name
-     * @return bool
-     */
-    public static function isValidName($name)
-    {
-        $page = Page::findOneBy([ 'name' => $name ]);
-        return !empty($page);
     }
 }

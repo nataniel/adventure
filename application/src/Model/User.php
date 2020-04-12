@@ -36,6 +36,18 @@ class User extends E4uUser
     protected $privileges;
 
     /**
+     * @var Game\Operator[]|ArrayCollection
+     * @OneToMany(targetEntity="Main\Model\Game\Operator", mappedBy="user", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $operators;
+
+    /**
+     * @var Game[]|ArrayCollection
+     * @OneToMany(targetEntity="Main\Model\Game", mappedBy="created_by")
+     */
+    protected $created_games;
+
+    /**
      * @return string|null
      */
     public function getLocale()
@@ -151,6 +163,42 @@ class User extends E4uUser
     public function hasPassword()
     {
         return !empty($this->encrypted_password);
+    }
+
+    /**
+     * @return array
+     */
+    public function getOperatedGames()
+    {
+        $games = [];
+        foreach ($this->operators as $operator) {
+            $games[] = $operator->getGame();
+        }
+
+        return $games;
+    }
+
+    /**
+     * @param  Game $game
+     * @return Game\Operator|null
+     */
+    public function getOperatorFor($game)
+    {
+        foreach ($this->operators as $operator) {
+            if ($game === $operator->getGame()) {
+                return $operator;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return Game[]|ArrayCollection
+     */
+    public function getCreatedGames()
+    {
+        return $this->created_games;
     }
 
     /**
