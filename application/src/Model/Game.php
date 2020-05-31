@@ -62,6 +62,14 @@ class Game extends Entity
     }
 
     /**
+     * @return Page[]
+     */
+    public function getPages()
+    {
+        return $this->pages;
+    }
+
+    /**
      * @param  User $user
      * @return Game\Operator|null
      */
@@ -93,5 +101,16 @@ class Game extends Entity
     public function getCreatedBy()
     {
         return $this->created_by;
+    }
+
+    /**
+     * @param  User|mixed $user
+     * @param  bool $keepConsistency
+     * @return $this
+     */
+    public function setCreatedBy($user, $keepConsistency = true)
+    {
+        $this->_set('created_by', $user, $keepConsistency);
+        return $this;
     }
 }

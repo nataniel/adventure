@@ -1,0 +1,33 @@
+<?php
+/** @var Main\View\Base $this */
+/** @var Main\Model\Game $game */
+$game = $this->game;
+$pages = $game->getPages();
+?>
+<h1><?= $this->getTitle() ?> - <?= $this->linkTo('edycja', '/admin/games/edit/' . $game->id()) ?></h1>
+<table class="table">
+    <tbody>
+    <?php foreach ($pages as $page): ?>
+        <tr>
+            <td style="width: 150px"><?= $this->linkTo($this->image($page->getImage(), $page->getName(), [ 'class' => 'img-fluid' ]), '/admin/pages/edit/' . $page->id()) ?></td>
+            <td><?= $this->linkTo(sprintf('#%s', $page->getName()), '/admin/pages/edit/' . $page->id()) ?></td>
+            <td>
+                <?= $page->getDescription() ?><br />
+                <small><?= mb_substr($page->getContent(), 0, 100) ?>...</small><br />
+                <small>
+                    <?php foreach ($page->getChoices() as $choice): ?>
+                        <?php $target = $choice->findTargetPage(); ?>
+                        <?= $target
+                            ? $this->linkTo($choice->toString(), '/admin/pages/edit/' . $target->id())
+                            : $this->linkTo($choice->toString(), '/admin/pages/create?name=' . $choice->getTarget(), [ 'class' => 'text-warning' ]) ?>
+                        |
+                    <?php endforeach; ?>
+                </small>
+            </td>
+            <td><?= $this->linkTo('edytuj', '/admin/pages/edit/' . $page->id()) ?></td>
+            <td><?= $this->linkTo('usuń', '/admin/pages/delete/' . $page->id(), [ 'class' => 'text-danger', 'confirm' => 'Czy jesteś pewien? Ta operacja jest nieodwracalna!!' ]) ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?= $this->linkTo('Utwórz stronę', '/admin/pages/create', [ 'class' => 'btn btn-primary flaticon-add' ]) ?>

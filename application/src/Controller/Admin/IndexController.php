@@ -5,6 +5,6 @@ class IndexController extends AbstractController
 {
     public function indexAction()
     {
-        return $this->redirectTo('/admin/pages');
+        return $this->redirectTo('/admin/games');
     }
 }
