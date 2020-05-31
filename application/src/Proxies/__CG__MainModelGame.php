@@ -26,7 +26,7 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * @var boolean flag indicating if this object was already initialized
      *
-     * @see \Doctrine\Common\Persistence\Proxy::__isInitialized
+     * @see \Doctrine\Persistence\Proxy::__isInitialized
      */
     public $__isInitialized__ = false;
 
@@ -212,6 +212,17 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getPages()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPages', []);
+
+        return parent::getPages();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getOperatorFor($user)
     {
 
@@ -240,6 +251,17 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedBy', []);
 
         return parent::getCreatedBy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setCreatedBy($user, $keepConsistency = true)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreatedBy', [$user, $keepConsistency]);
+
+        return parent::setCreatedBy($user, $keepConsistency);
     }
 
     /**
