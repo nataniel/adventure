@@ -2,6 +2,7 @@
 /** @var Main\View\Base $this */
 /** @var Main\Model\Page $page */
 $page = $this->page;
+$game = $page->getGame();
 $choices = $page->getChoices();
 $form = $this->createBootstrapForm($this->createChoice);
 ?>
@@ -17,7 +18,7 @@ $form = $this->createBootstrapForm($this->createChoice);
                     <?php $target = $choice->findTargetPage(); ?>
                     <?= $target
                             ? $this->linkTo('#' . $choice->getTarget(), '/admin/pages/edit/' . $target->id(), [ 'class' => 'btn btn-outline-success btn-block' ])
-                            : $this->linkTo('#' . $choice->getTarget(), '/admin/pages/create?name=' . $choice->getTarget(), [ 'class' => 'btn btn-outline-warning btn-block' ]) ?>
+                            : $this->linkTo('#' . $choice->getTarget(), '/admin/pages/create/' . $game->id() . '?name=' . $choice->getTarget(), [ 'class' => 'btn btn-outline-warning btn-block' ]) ?>
                 </div>
                 <div class="col-5 p-2"><?= $choice->getDescription() ?></div>
                 <div class="col-2 p-2"><?= $choice->getStatus() ?></div>

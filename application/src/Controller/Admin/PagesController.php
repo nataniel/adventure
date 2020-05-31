@@ -9,26 +9,24 @@ class PagesController extends AbstractController
 {
     public function indexAction()
     {
-        $pages = Page::getRepository()->findBy([], [ 'name' => 'ASC' ]);
-
-        return [
-            'pages' => $pages,
-        ];
+        return $this->redirectTo('/admin/games');
     }
 
     public function deleteAction()
     {
         $page = $this->getPageFromParam();
+        $game = $page->getGame();
         $page->destroy();
 
-        return $this->redirectBackOrTo('/admin/pages',
+        return $this->redirectBackOrTo('/admin/games/pages/' . $game->id(),
             sprintf('Strona <strong>%s</strong> została usunięta.', $page),
             View::FLASH_MESSAGE);
     }
 
     public function createAction()
     {
-        $page = new Page([ 'name' => $this->getRequest()->getQuery('name'), ]);
+        $game = $this->getGameFromParam();
+        $page = new Page([ 'name' => $this->getRequest()->getQuery('name'), 'game' => $game ]);
         $createPage = new Form\CreatePage($this->getRequest(), [ 'page' => $page, ]);
 
         if ($createPage->isValid()) {

@@ -55,6 +55,14 @@ class Page extends Entity
     }
 
     /**
+     * @return Game
+     */
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    /**
      * @return string
      */
     public function getName()
@@ -125,11 +133,19 @@ class Page extends Entity
     }
 
     /**
+     * @todo przerobic na poprawne zapytanie SQL
      * @return Page\Choice[]
      */
     public function findSourceChoices()
     {
-        return Page\Choice::findBy([ 'target' => $this->name ]);
+        $choices = [];
+        foreach (Page\Choice::findBy([ 'target' => $this->name ]) as $choice) {
+            if ($choice->getParent()->getGame()->id() == $this->getGame()->id()) {
+                $choices[] = $choice;
+            }
+        }
+
+        return $choices;
     }
 
     /**

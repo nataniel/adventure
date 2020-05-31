@@ -58,28 +58,4 @@ class GamesController extends AbstractController
             'editGame' => $form,
         ];
     }
-
-    /**
-     * @return Response\Redirect|Game
-     */
-    private function getGameFromParam()
-    {
-        $id = $this->getParam('id');
-        if (empty($id)) {
-            return $this->redirectTo('/games', 'Brak identyfikatora gry.', View::FLASH_ERROR);
-        }
-
-        $game = Game::find($id);
-        if (empty($game)) {
-            return $this->redirectTo('/games', 'Nieprawidłowy identyfikator gry.', View::FLASH_ERROR);
-        }
-
-        $user = $this->getCurrentUser();
-        $operator = $game->getOperatorFor($user);
-        if (empty($operator)) {
-            return $this->redirectTo('/games', 'Brak uprawnień do edycji gry.', View::FLASH_ERROR);
-        }
-
-        return $game;
-    }
 }

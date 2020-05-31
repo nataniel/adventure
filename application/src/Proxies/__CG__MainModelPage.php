@@ -190,6 +190,17 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getGame()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGame', []);
+
+        return parent::getGame();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getName()
     {
 

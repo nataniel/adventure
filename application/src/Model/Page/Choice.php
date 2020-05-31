@@ -61,7 +61,8 @@ class Choice extends Entity
      */
     public function findTargetPage()
     {
-        return Page::findOneBy([ 'name' => $this->target ]);
+        $game = $this->parent->getGame();
+        return Page::findOneBy([ 'name' => $this->target, 'game' => $game->id() ]);
     }
 
     /**

@@ -19,7 +19,7 @@ $pages = $game->getPages();
                         <?php $target = $choice->findTargetPage(); ?>
                         <?= $target
                             ? $this->linkTo($choice->toString(), '/admin/pages/edit/' . $target->id())
-                            : $this->linkTo($choice->toString(), '/admin/pages/create?name=' . $choice->getTarget(), [ 'class' => 'text-warning' ]) ?>
+                            : $this->linkTo($choice->toString(), '/admin/pages/create/'. $game->id() .'?name=' . $choice->getTarget(), [ 'class' => 'text-warning' ]) ?>
                         |
                     <?php endforeach; ?>
                 </small>
@@ -30,4 +30,4 @@ $pages = $game->getPages();
     <?php endforeach; ?>
     </tbody>
 </table>
-<?= $this->linkTo('Utwórz stronę', '/admin/pages/create', [ 'class' => 'btn btn-primary flaticon-add' ]) ?>
+<?= $this->linkTo('Utwórz stronę', '/admin/pages/create/'. $game->id(), [ 'class' => 'btn btn-primary flaticon-add' ]) ?>

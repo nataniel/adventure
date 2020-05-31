@@ -7,6 +7,7 @@ $pages = $this->pages;
 <table class="table">
     <tbody>
         <?php foreach ($pages as $page): ?>
+            <?php $game = $page->getGame(); ?>
             <tr>
                 <td style="width: 150px"><?= $this->linkTo($this->image($page->getImage(), $page->getName(), [ 'class' => 'img-fluid' ]), '/admin/pages/edit/' . $page->id()) ?></td>
                 <td><?= $this->linkTo(sprintf('#%s', $page->getName()), '/admin/pages/edit/' . $page->id()) ?></td>
@@ -18,7 +19,7 @@ $pages = $this->pages;
                         <?php $target = $choice->findTargetPage(); ?>
                         <?= $target
                             ? $this->linkTo($choice->toString(), '/admin/pages/edit/' . $target->id())
-                            : $this->linkTo($choice->toString(), '/admin/pages/create?name=' . $choice->getTarget(), [ 'class' => 'text-warning' ]) ?>
+                            : $this->linkTo($choice->toString(), '/admin/pages/create/' . $game->id(). '?name=' . $choice->getTarget(), [ 'class' => 'text-warning' ]) ?>
                         |
                     <?php endforeach; ?>
                     </small>
@@ -29,4 +30,4 @@ $pages = $this->pages;
         <?php endforeach; ?>
     </tbody>
 </table>
-<?= $this->linkTo('Utwórz stronę', '/admin/pages/create', [ 'class' => 'btn btn-primary flaticon-add' ]) ?>
+<?= $this->linkTo('Utwórz stronę', '/admin/pages/create/' . $game->id(), [ 'class' => 'btn btn-primary flaticon-add' ]) ?>
