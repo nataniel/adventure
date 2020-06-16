@@ -39,6 +39,7 @@ class PagesController extends AbstractController
         return [
             'page' => $page,
             'createPage' => $createPage,
+
         ];
     }
 
