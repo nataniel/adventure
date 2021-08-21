@@ -179,7 +179,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function __toString()
+    public function __toString(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, '__toString', []);
@@ -190,7 +190,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getGame()
+    public function getGame(): \Main\Model\Game
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getGame', []);
@@ -201,7 +201,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getName()
+    public function getName(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
@@ -212,7 +212,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', []);
@@ -223,7 +223,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setName($name)
+    public function setName(string $name): \Main\Model\Page
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', [$name]);
@@ -234,7 +234,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getContent()
+    public function getContent(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getContent', []);
@@ -245,7 +245,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getImage()
+    public function getImage(): ?string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getImage', []);
@@ -256,7 +256,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setImage($image)
+    public function setImage(?string $image): \Main\Model\Page
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setImage', [$image]);
@@ -267,7 +267,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getChoices()
+    public function getChoices(): \Doctrine\ORM\PersistentCollection
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getChoices', []);
@@ -278,7 +278,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function addToChoices($choice, $keepConsistency = true)
+    public function addToChoices($choice, bool $keepConsistency = true): \Main\Model\Page
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'addToChoices', [$choice, $keepConsistency]);
@@ -289,7 +289,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function findSourceChoices()
+    public function findSourceChoices(): array
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'findSourceChoices', []);
@@ -300,7 +300,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getStatus()
+    public function getStatus(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStatus', []);
@@ -311,7 +311,7 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function toUrl()
+    public function toUrl(): array
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'toUrl', []);

@@ -2,9 +2,10 @@
 /** @var Main\View\Base $this */
 /** @var Main\Model\Page $page */
 $page = $this->page;
+$game = $page->getGame();
 $form = $this->createBootstrapForm($this->editPage);
 ?>
-<h1>Edycja strony</h1>
+<h1>Edycja strony <small><?= $this->linkTo('ustawienia', '/admin/games/edit/' . $game->id()) ?> | <?= $this->linkTo('lista stron', '/admin/games/pages/' . $game->id()) ?></small></h1>
 <div class="row">
     <div class="col-hd-6 col-lg-9">
 

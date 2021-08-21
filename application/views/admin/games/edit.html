@@ -4,13 +4,21 @@
 $game = $this->game;
 $form = $this->createBootstrapForm($this->editGame);
 ?>
-<h1><?= $this->getTitle() ?> - <?= $this->linkTo('lista stron', '/admin/games/pages/' . $game->id()) ?></h1>
+<h1><?= $this->getTitle() ?> <small>ustawienia | <?= $this->linkTo('lista stron', '/admin/games/pages/' . $game->id()) ?></small></h1>
 <div class="row">
     <div class="col-hd-4">
         <?= $form->start() ?>
         <?= $form->text('name') ?>
         <?= $form->textarea('description', [ 'rows' => 3 ]) ?>
+        <?= $form->checkbox('public') ?>
         <?= $form->button('submit', [ 'button_class' => 'flaticon-save' ]) ?>
         <?= $form->end() ?>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-hd-4">
+        <?= $this->linkTo('Usuń grę na zawsze', '/admin/games/remove/' . $game->id(), [ 'class' => 'btn btn-danger', 'confirm' => 'Czy na pewno usunąć grę? Tej operacji nie da się cofnąć!' ]) ?>
     </div>
 </div>

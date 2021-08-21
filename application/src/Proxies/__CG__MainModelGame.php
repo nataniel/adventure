@@ -66,10 +66,10 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'name', 'description', 'created_at', 'created_by', 'operators', 'pages', 'id', '_errors', '_readonly'];
+            return ['__isInitialized__', 'name', 'description', 'public', 'created_at', 'created_by', 'operators', 'pages', 'id', '_errors', '_readonly'];
         }
 
-        return ['__isInitialized__', 'name', 'description', 'created_at', 'created_by', 'operators', 'pages', 'id', '_errors', '_readonly'];
+        return ['__isInitialized__', 'name', 'description', 'public', 'created_at', 'created_by', 'operators', 'pages', 'id', '_errors', '_readonly'];
     }
 
     /**
@@ -179,7 +179,7 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getName()
+    public function getName(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getName', []);
@@ -190,7 +190,7 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', []);
@@ -201,7 +201,7 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getOperators()
+    public function getOperators(): \Doctrine\ORM\PersistentCollection
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOperators', []);
@@ -212,7 +212,7 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getPages()
+    public function getPages(): \Doctrine\ORM\PersistentCollection
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPages', []);
@@ -223,7 +223,7 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getOperatorFor($user)
+    public function getOperatorFor(\Main\Model\User $user): ?\Main\Model\Game\Operator
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOperatorFor', [$user]);
@@ -234,7 +234,7 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function addToOperators($operator, $keepConsistency = true)
+    public function addToOperators($operator, bool $keepConsistency = true): \Main\Model\Game
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'addToOperators', [$operator, $keepConsistency]);
@@ -245,7 +245,7 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): \Main\Model\User
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCreatedBy', []);
@@ -256,12 +256,45 @@ class Game extends \Main\Model\Game implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setCreatedBy($user, $keepConsistency = true)
+    public function setCreatedBy($user, bool $keepConsistency = true): \Main\Model\Game
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreatedBy', [$user, $keepConsistency]);
 
         return parent::setCreatedBy($user, $keepConsistency);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isPublic(): bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isPublic', []);
+
+        return parent::isPublic();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPublic(bool $public = true): \Main\Model\Game
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPublic', [$public]);
+
+        return parent::setPublic($public);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isAvailableFor(?\Main\Model\User $user): bool
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'isAvailableFor', [$user]);
+
+        return parent::isAvailableFor($user);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 namespace Main\Model;
 
+use Doctrine\ORM\PersistentCollection;
 use E4u\Common\StringTools;
 use E4u\Model\Entity;
 
@@ -19,10 +20,10 @@ class Page extends Entity
     protected $game;
 
     /** @Column(type="string") */
-    protected $name;
+    protected $name = '';
 
     /** @Column(type="string") */
-    protected $description;
+    protected $description = '';
 
     /** @Column(type="text") */
     protected $content = '';
@@ -46,43 +47,27 @@ class Page extends Entity
      **/
     protected $choices;
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf('#%s: %s', $this->name, $this->description);
     }
 
-    /**
-     * @return Game
-     */
-    public function getGame()
+    public function getGame(): Game
     {
         return $this->game;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $name
-     * @return Page
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = !empty($name)
             ? StringTools::toUrl(trim($name, '#'), true)
@@ -90,33 +75,26 @@ class Page extends Entity
         return $this;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @return string
-     */
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    /**
-     * @param  string $image
-     * @return $this
-     */
-    public function setImage($image)
+    public function setImage(?string $image): self
     {
         $this->image = $image ?: null;
         return $this;
     }
 
     /**
-     * @return Page\Choice[]
+     * @return Page\Choice[]|PersistentCollection
      */
-    public function getChoices()
+    public function getChoices(): PersistentCollection
     {
         return $this->choices;
     }
@@ -126,7 +104,7 @@ class Page extends Entity
      * @param  bool $keepConsistency
      * @return $this
      */
-    public function addToChoices($choice, $keepConsistency = true)
+    public function addToChoices($choice, bool $keepConsistency = true): self
     {
         $this->_addTo('choices', $choice, $keepConsistency);
         return $this;
@@ -136,7 +114,7 @@ class Page extends Entity
      * @todo przerobic na poprawne zapytanie SQL
      * @return Page\Choice[]
      */
-    public function findSourceChoices()
+    public function findSourceChoices(): array
     {
         $choices = [];
         foreach (Page\Choice::findBy([ 'target' => $this->name ]) as $choice) {
@@ -148,18 +126,12 @@ class Page extends Entity
         return $choices;
     }
 
-    /**
-     * @return string
-     */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
 
-    /**
-     * @return array
-     */
-    public function toUrl()
+    public function toUrl(): array
     {
         return [
             'name' => $this->name,

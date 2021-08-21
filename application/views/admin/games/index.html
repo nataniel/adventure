@@ -20,6 +20,7 @@ $form = $this->createBootstrapForm($this->createGame);
         <?= $form->start() ?>
         <?= $form->text('name') ?>
         <?= $form->textarea('description', [ 'rows' => 3 ]) ?>
+        <?= $form->checkbox('public') ?>
         <?= $form->button('submit', [ 'button_class' => 'flaticon-save' ]) ?>
         <?= $form->end() ?>
     </div>

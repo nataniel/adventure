@@ -9,37 +9,33 @@ class Session
     private $statuses = [];
     private $player_name;
     private $loaded_page;
+    private $game;
 
-    public function __construct($player_name, $page = 'start')
+    public function __construct(int $game, string $player_name, string $page = 'start')
     {
+        $this->game = $game;
         $this->player_name = $player_name;
         $this->setCurrentPage($page);
     }
 
-    /**
-     * @param  string $name
-     * @return $this
-     * @throws Exception
-     */
-    private function setCurrentPage($name)
+    private function setCurrentPage(string $name)
     {
         $this->current_page = $name;
         $this->loadCurrentPage();
         $this->applyCurrentStatuses();
-        return $this;
     }
 
-    public function getCurrentPage()
+    public function getCurrentPage(): string
     {
         return $this->current_page;
     }
 
-    /**
-     * @param  int $choice
-     * @return bool
-     * @throws Exception
-     */
-    public function applyChoice($choice)
+    public function getGame(): int
+    {
+        return $this->game;
+    }
+
+    public function applyChoice(int $choice): bool
     {
         $current_page = $this->current_page;
         foreach ($this->getAvailableChoices() as $available) {
@@ -60,50 +56,36 @@ class Session
 
         return false;
     }
-    /**
-     * @return $this
-     * @throws Exception
-     */
+
     private function loadCurrentPage()
     {
-        $page = Page::findOneBy([ 'name' => $this->current_page ]);
+        $page = Page::findOneBy([ 'game' => $this->game, 'name' => $this->current_page ]);
         if (empty($page)) {
             throw new Exception(sprintf('Page #%s is missing. Restart game?', $this->current_page));
         }
 
         $this->loaded_page = $page;
-        return $this;
     }
 
-
-    /**
-     * @return $this
-     */
     private function applyCurrentStatuses()
     {
         $page = $this->getLoadedPage();
         foreach (explode(',', $page->getStatus()) as $status) {
             $this->applyStatus($status);
         }
-
-        return $this;
     }
 
-    /**
-     * @param  string $status
-     * @return $this
-     */
-    private function applyStatus($status)
+    private function applyStatus(string $status)
     {
         $status = trim($status);
         if (empty($status)) {
-            return $this;
+            return;
         }
 
         if (substr($status, 0, 1) == '-') {
             $status = substr($status, 1);
             $this->removeStatus($status);
-            return $this;
+            return;
         }
 
         if (substr($status, 0, 1) == '+') {
@@ -111,40 +93,23 @@ class Session
         }
 
         $this->addStatus($status);
-        return $this;
     }
 
-    /**
-     * @param  string $status
-     * @return $this
-     */
-    private function removeStatus($status)
+    private function removeStatus(string $status)
     {
         if (($key = array_search($status, $this->statuses)) !== false) {
             unset($this->statuses[ $key ]);
         }
-
-        return $this;
     }
 
-    /**
-     * @param  string $status
-     * @return $this
-     */
-    private function addStatus($status)
+    private function addStatus(string $status)
     {
         if (!$this->hasStatus($status)) {
             $this->statuses[] = $status;
         }
-
-        return $this;
     }
 
-    /**
-     * @param  string $status
-     * @return bool
-     */
-    private function hasStatus($status)
+    private function hasStatus(string $status): bool
     {
         return array_search($status, $this->statuses) !== false;
     }
@@ -152,7 +117,7 @@ class Session
     /**
      * @return Page\Choice[]
      */
-    public function getAvailableChoices()
+    public function getAvailableChoices(): array
     {
         $choices = [];
         foreach ($this->getLoadedPage()->getChoices() as $choice) {
@@ -164,11 +129,7 @@ class Session
         return $choices;
     }
 
-    /**
-     * @param  string $status
-     * @return bool
-     */
-    public function hasRequiredStatus($status)
+    public function hasRequiredStatus(string $status): bool
     {
         $status = trim($status);
         if (empty($status)) {
@@ -187,26 +148,17 @@ class Session
         return $this->hasStatus($status);
     }
 
-    /**
-     * @return string
-     */
-    public function getPlayerName()
+    public function getPlayerName(): string
     {
         return $this->player_name;
     }
 
-    /**
-     * @return array
-     */
-    public function getStatuses()
+    public function getStatuses(): array
     {
         return $this->statuses;
     }
 
-    /**
-     * @return Page
-     */
-    public function getLoadedPage()
+    public function getLoadedPage(): Page
     {
         if (null === $this->loaded_page) {
             throw new Exception(sprintf('No page is loaded (current page: #%s.)', $this->current_page));
@@ -215,12 +167,9 @@ class Session
         return $this->loaded_page;
     }
 
-    /**
-     * @return array
-     */
-    public function __sleep()
+    public function __sleep(): array
     {
-        return [ 'current_page', 'statuses', 'player_name' ];
+        return [ 'current_page', 'statuses', 'player_name', 'game' ];
     }
 
     public function __wakeup()

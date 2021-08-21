@@ -1,6 +1,7 @@
 <?php
 namespace Main\Model;
 
+use Doctrine\ORM\PersistentCollection;
 use E4u\Model\Entity;
 
 /**
@@ -10,10 +11,13 @@ use E4u\Model\Entity;
 class Game extends Entity
 {
     /** @Column(type="string", unique=true) */
-    protected $name;
+    protected $name = '';
 
     /** @Column(type="string") */
-    protected $description;
+    protected $description = '';
+
+    /** @Column(type="boolean") */
+    protected $public = false;
 
     /** @Column(type="datetime", nullable=true) */
     protected $created_at;
@@ -37,43 +41,33 @@ class Game extends Entity
      **/
     protected $pages;
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * @return Game\Operator[]
+     * @return Game\Operator[]|PersistentCollection
      */
-    public function getOperators()
+    public function getOperators(): PersistentCollection
     {
         return $this->operators;
     }
 
     /**
-     * @return Page[]
+     * @return Page[]|PersistentCollection
      */
-    public function getPages()
+    public function getPages(): PersistentCollection
     {
         return $this->pages;
     }
 
-    /**
-     * @param  User $user
-     * @return Game\Operator|null
-     */
-    public function getOperatorFor($user)
+    public function getOperatorFor(User $user): ?Game\Operator
     {
         foreach ($this->operators as $operator) {
             if ($user === $operator->getUser()) {
@@ -84,33 +78,45 @@ class Game extends Entity
         return null;
     }
 
-    /**
-     * @param  mixed $operator
-     * @param  bool $keepConsistency
-     * @return $this
-     */
-    public function addToOperators($operator, $keepConsistency = true)
+    public function addToOperators($operator, bool $keepConsistency = true): self
     {
         $this->_addTo('operators', $operator, $keepConsistency);
         return $this;
     }
 
-    /**
-     * @return User
-     */
-    public function getCreatedBy()
+    public function getCreatedBy(): User
     {
         return $this->created_by;
     }
 
-    /**
-     * @param  User|mixed $user
-     * @param  bool $keepConsistency
-     * @return $this
-     */
-    public function setCreatedBy($user, $keepConsistency = true)
+    public function setCreatedBy($user, bool $keepConsistency = true): self
     {
         $this->_set('created_by', $user, $keepConsistency);
         return $this;
+    }
+
+    public function isPublic(): bool
+    {
+        return $this->public;
+    }
+
+    public function setPublic(bool $public = true): Game
+    {
+        $this->public = $public;
+        return $this;
+    }
+
+    public function isAvailableFor(?User $user): bool
+    {
+        if ($this->public) {
+            return true;
+        }
+
+        if (!$user) {
+            return false;
+        }
+
+        $operator = $this->getOperatorFor($user);
+        return !empty($operator);
     }
 }

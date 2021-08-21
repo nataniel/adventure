@@ -4,7 +4,7 @@
 $game = $this->game;
 $pages = $game->getPages();
 ?>
-<h1><?= $this->getTitle() ?> - <?= $this->linkTo('edycja', '/admin/games/edit/' . $game->id()) ?></h1>
+    <h1><?= $this->getTitle() ?> <small><?= $this->linkTo('ustawienia', '/admin/games/edit/' . $game->id()) ?> | lista stron</small></h1>
 <table class="table">
     <tbody>
     <?php foreach ($pages as $page): ?>

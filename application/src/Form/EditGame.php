@@ -21,6 +21,11 @@ class EditGame extends Form\Base
                 'rows' => 3,
             ]),
 
+            new Form\Element\CheckBox('public', [
+                'label' => 'Dostępna publicznie',
+                'model' => $this->getModel('game'),
+            ]),
+
             new Form\Element\Submit('submit', 'Zapisz zmiany'),
         ]);
 

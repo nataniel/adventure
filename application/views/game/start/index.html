@@ -4,6 +4,7 @@ $form = $this->createBootstrapForm($this->startGame);
 ?>
 <h1><?= $this->getTitle() ?></h1>
 <?= $form->start([ 'class' => 'form-inline' ]) ?>
+<?= $form->select('game', [ 'group_class' => 'mr-2' ]) ?>
 <?= $form->text('player_name', [ 'group_class' => 'mr-2' ]) ?>
 <?= $form->button('submit') ?>
 <?= $form->end() ?>
