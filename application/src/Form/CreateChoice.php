@@ -12,6 +12,7 @@ class CreateChoice extends Form\Base
             new Form\Element\Number('target', [
                 'label' => 'Strona docelowa',
                 'model' => $this->getModel('choice'),
+                'required' => 'Podaj kod strony docelowej',
             ]),
 
             new Form\Element\TextArea('description', [

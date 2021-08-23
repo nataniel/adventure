@@ -4,12 +4,13 @@ namespace Main\Controller\Admin;
 use E4u\Application\View;
 use Main\Form;
 use Main\Model\Page;
+use Main\Model\Game;
 
 class PagesController extends AbstractController
 {
     public function indexAction()
     {
-        return $this->redirectTo('/admin/games');
+        $this->redirectTo('/admin/games');
     }
 
     public function deleteAction()
@@ -18,20 +19,21 @@ class PagesController extends AbstractController
         $game = $page->getGame();
         $page->destroy();
 
-        return $this->redirectBackOrTo('/admin/games/pages/' . $game->id(),
+        $this->redirectBackOrTo('/admin/games/pages/' . $game->id(),
             sprintf('Strona <strong>%s</strong> została usunięta.', $page),
             View::FLASH_MESSAGE);
     }
 
-    public function createAction()
+    public function createAction(): array
     {
         $game = $this->getGameFromParam();
         $page = new Page([ 'name' => $this->getRequest()->getQuery('name'), 'game' => $game ]);
         $createPage = new Form\CreatePage($this->getRequest(), [ 'page' => $page, ]);
 
         if ($createPage->isValid()) {
+            $page->testStatusChanges();
             $page->save();
-            return $this->redirectTo('/admin/pages/edit/' . $page->id(),
+            $this->redirectTo('/admin/pages/edit/' . $page->id(),
                 'Strona została utworzona.',
                 View::FLASH_SUCCESS);
         }
@@ -43,20 +45,25 @@ class PagesController extends AbstractController
         ];
     }
 
-    public function editAction()
+    public function editAction(): array
     {
         $page = $this->getPageFromParam();
         $editPage = new Form\EditPage($this->getRequest(), [ 'page' => $page, ]);
+
         if ($editPage->isValid()) {
+            $page->testStatusChanges();
             $page->save();
-            return $this->redirectToSelf('Zmiany zostały zapisane.', View::FLASH_SUCCESS);
+            $this->redirectToSelf('Zmiany zostały zapisane.', View::FLASH_SUCCESS);
         }
 
         $choice = new Page\Choice([ 'parent' => $page ]);
         $createChoice = new Form\CreateChoice($this->getRequest(), [ 'choice' => $choice, ]);
         if ($createChoice->isValid()) {
+            $choice->testStatusRequirements();
             $choice->save();
-            return $this->redirectBackOrTo('/admin/pages/edit/' . $page->id(), 'Wybór został dodany.', View::FLASH_SUCCESS);
+            $this->redirectBackOrTo('/admin/pages/edit/' . $page->id(),
+                'Wybór został dodany.',
+                View::FLASH_SUCCESS);
         }
 
         return [
@@ -72,22 +79,18 @@ class PagesController extends AbstractController
         $page = $choice->getParent();
 
         $choice->destroy();
-        return $this->redirectTo('/admin/pages/edit/' . $page->id(), 'Wybór został usunięty.', View::FLASH_MESSAGE);
+        $this->redirectTo('/admin/pages/edit/' . $page->id(),
+            'Wybór został usunięty.', View::
+            FLASH_MESSAGE);
     }
 
-    /**
-     * @return Page|null
-     */
-    private function getPageFromParam()
+    private function getPageFromParam(): ?Page
     {
         $id = (int)$this->getParam('id');
         return Page::find($id);
     }
 
-    /**
-     * @return Page\Choice|null
-     */
-    private function getChoiceFromParam()
+    private function getChoiceFromParam(): ?Page\Choice
     {
         $id = (int)$this->getParam('id');
         return Page\Choice::find($id);

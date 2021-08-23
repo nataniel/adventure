@@ -179,7 +179,7 @@ class Choice extends \Main\Model\Page\Choice implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function getParent()
+    public function getParent(): ?\Main\Model\Page
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getParent', []);
@@ -190,7 +190,7 @@ class Choice extends \Main\Model\Page\Choice implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function setParent($parent, $keepConsistency = true)
+    public function setParent($parent, bool $keepConsistency = true): \Main\Model\Page\Choice
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setParent', [$parent, $keepConsistency]);
@@ -201,7 +201,7 @@ class Choice extends \Main\Model\Page\Choice implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function getTarget()
+    public function getTarget(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTarget', []);
@@ -212,7 +212,7 @@ class Choice extends \Main\Model\Page\Choice implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function findTargetPage()
+    public function findTargetPage(): ?\Main\Model\Page
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'findTargetPage', []);
@@ -223,7 +223,7 @@ class Choice extends \Main\Model\Page\Choice implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function setTarget($target)
+    public function setTarget(string $target): \Main\Model\Page\Choice
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setTarget', [$target]);
@@ -234,7 +234,7 @@ class Choice extends \Main\Model\Page\Choice implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', []);
@@ -245,7 +245,7 @@ class Choice extends \Main\Model\Page\Choice implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function getStatus()
+    public function getStatus(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStatus', []);
@@ -256,7 +256,7 @@ class Choice extends \Main\Model\Page\Choice implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function setDescription($description)
+    public function setDescription(string $description): \Main\Model\Page\Choice
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDescription', [$description]);
@@ -267,12 +267,34 @@ class Choice extends \Main\Model\Page\Choice implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function toString()
+    public function toString(): string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'toString', []);
 
         return parent::toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getStatusRequirements(): array
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStatusRequirements', []);
+
+        return parent::getStatusRequirements();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function testStatusRequirements()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'testStatusRequirements', []);
+
+        return parent::testStatusRequirements();
     }
 
     /**

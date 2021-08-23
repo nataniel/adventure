@@ -70,48 +70,35 @@ class Session
     private function applyCurrentStatuses()
     {
         $page = $this->getLoadedPage();
-        foreach (explode(',', $page->getStatus()) as $status) {
-            $this->applyStatus($status);
+        $changes = $page->getStatusChanges();
+        foreach ($changes as $change) {
+            $this->applyStatusChange($change);
         }
     }
 
-    private function applyStatus(string $status)
+    private function applyStatusChange(array $change)
     {
-        $status = trim($status);
-        if (empty($status)) {
-            return;
+        $name = $change['name'];
+        $this->initStatus($name);
+
+        $value = $this->statusValue($change['value']);
+        switch ($change['sign']) {
+            case '+':
+                $this->statuses[ $name ] += $value;
+                break;
+            case '-':
+                $this->statuses[ $name ] -= $value;
+                break;
+            case '++':
+                $this->statuses[ $name ] ++;
+                break;
+            case '--':
+                $this->statuses[ $name ] --;
+                break;
+            case '=':
+                $this->statuses[ $name ] = $value;
+                break;
         }
-
-        if (substr($status, 0, 1) == '-') {
-            $status = substr($status, 1);
-            $this->removeStatus($status);
-            return;
-        }
-
-        if (substr($status, 0, 1) == '+') {
-            $status = substr($status, 1);
-        }
-
-        $this->addStatus($status);
-    }
-
-    private function removeStatus(string $status)
-    {
-        if (($key = array_search($status, $this->statuses)) !== false) {
-            unset($this->statuses[ $key ]);
-        }
-    }
-
-    private function addStatus(string $status)
-    {
-        if (!$this->hasStatus($status)) {
-            $this->statuses[] = $status;
-        }
-    }
-
-    private function hasStatus(string $status): bool
-    {
-        return array_search($status, $this->statuses) !== false;
     }
 
     /**
@@ -121,7 +108,7 @@ class Session
     {
         $choices = [];
         foreach ($this->getLoadedPage()->getChoices() as $choice) {
-            if ($this->hasRequiredStatus($choice->getStatus())) {
+            if ($this->areRequirementsMet($choice)) {
                 $choices[] = $choice;
             }
         }
@@ -129,23 +116,57 @@ class Session
         return $choices;
     }
 
-    public function hasRequiredStatus(string $status): bool
+    private function areRequirementsMet(Page\Choice $choice): bool
     {
-        $status = trim($status);
-        if (empty($status)) {
-            return true;
+        $requirements = $choice->getStatusRequirements();
+        foreach ($requirements as $requirement) {
+            if (!$this->isRequirementMet($requirement)) {
+                return false;
+            }
         }
 
-        if (substr($status, 0, 1) == '-') {
-            $status = substr($status, 1);
-            return !$this->hasStatus($status);
-        }
+        return true;
+    }
 
-        if (substr($status, 0, 1) == '+') {
-            $status = substr($status, 1);
-        }
+    private function isRequirementMet(array $requirement): bool
+    {
+        $name = $requirement['name'];
+        $this->initStatus($name);
 
-        return $this->hasStatus($status);
+        $value = $this->statusValue($requirement['value']);
+        switch ($requirement['sign']) {
+            case '=':
+                return $this->statuses[ $name ] == $value;
+            case '>':
+                return $this->statuses[ $name ] > $value;
+            case '>=':
+                return $this->statuses[ $name ] >= $value;
+            case '<':
+                return $this->statuses[ $name ] < $value;
+            case '<=':
+                return $this->statuses[ $name ] <= $value;
+        }
+    }
+
+    private function statusValue($value)
+    {
+        switch ($value) {
+            case 'true':
+                return true;
+                break;
+            case 'false':
+                return false;
+                break;
+            default:
+                return (int)$value;
+        }
+    }
+
+    private function initStatus($name)
+    {
+        if (!isset($this->statuses[ $name ])) {
+            $this->statuses[ $name ] = null;
+        }
     }
 
     public function getPlayerName(): string

@@ -131,6 +131,37 @@ class Page extends Entity
         return $this->status;
     }
 
+    public function getStatusChanges(): array
+    {
+        $result = [];
+        foreach (explode(',', $this->status) as $status) {
+            if ($change = $this->match($status)) {
+                $result[] = $change;
+            }
+        }
+
+        return $result;
+    }
+
+    private function match($status): ?array
+    {
+        $status = trim($status);
+        $pattern = '/^(?<name>[[:alpha:]][[:alnum:]]+)(?<sign>\+|\-|\+\+|\-\-|\=)(?<value>(true|false|[0-9]+))?$/iu';
+        return preg_match($pattern, $status, $matches)
+            ? $matches
+            : null;
+    }
+
+    public function testStatusChanges()
+    {
+        foreach (explode(',', $this->status) as $status) {
+            $change = $this->match($status);
+            if (!empty($status) && is_null($change)) {
+                throw new Game\Exception(sprintf('Invalid status change: <strong>%s</strong>', $status));
+            }
+        }
+    }
+
     public function toUrl(): array
     {
         return [

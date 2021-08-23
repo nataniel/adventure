@@ -311,6 +311,28 @@ class Page extends \Main\Model\Page implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getStatusChanges(): array
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStatusChanges', []);
+
+        return parent::getStatusChanges();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function testStatusChanges()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'testStatusChanges', []);
+
+        return parent::testStatusChanges();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function toUrl(): array
     {
 
