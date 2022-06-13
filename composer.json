@@ -15,7 +15,7 @@
     "phpunit/phpunit": "^5.6.1"
   },
   "require": {
-    "php": "^7.0",
+    "php": "^7.2|^8.1",
     "ext-intl": "*",
     "nataniel/e4u-framework": "dev-master",
     "tinymce/tinymce": "^5.1"
